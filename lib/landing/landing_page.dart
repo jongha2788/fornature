@@ -35,7 +35,7 @@ class _LandingState extends State<Landing> {
               style: TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.w900,
-                fontFamily: 'Ubuntu-Regular',
+                fontFamily: 'Lato-Regular',
               ),
             )
           ],

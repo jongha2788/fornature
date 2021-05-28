@@ -19,16 +19,16 @@ class _TabScreenState extends State<TabScreen> {
 
   List pages = [
     {
-      // 'title': 'Home',
-      // 'icon': CupertinoIcons.home,
-      // 'page': Timeline(),
-      // 'index': 0,
+      'title': 'Home',
+      'icon': CupertinoIcons.home,
+      'page': Timeline(),
+      'index': 0,
     },
     {
-      // 'title': 'Search',
-      // 'icon': CupertinoIcons.search,
-      // 'page': Search(),
-      // 'index': 1,
+      'title': 'Search',
+      'icon': CupertinoIcons.search,
+      'page': Search(),
+      'index': 1,
     },
     {
       'title': 'unsee',
@@ -85,7 +85,7 @@ class _TabScreenState extends State<TabScreen> {
                           color: item['index'] != _page
                               ? Colors.grey
                               : Theme.of(context).accentColor,
-                          size: 20.0,
+                          size: 25.0,
                         ),
                         onPressed: () => navigationTapped(item['index']),
                       ),

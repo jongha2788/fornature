@@ -3,17 +3,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
   //App related strings
-  static String appName = "Social App";
+  static String appName = "ChoHaengGil";
 
   //Colors for theme
-  static Color lightPrimary = Color(0xfff3f4f9);
+  // static Color lightPrimary = Color(0xfff3f4f9);
+  static Color lightPrimary = Color(0xfff8fff7);
   static Color darkPrimary = Color(0xff2B2B2B);
 
-  static Color lightAccent = Color(0xff886EE4);
-
+  // static Color lightAccent = Color(0xff886EE4);
+  static Color lightAccent = Colors.black;
   static Color darkAccent = Color(0xff886EE4);
 
-  static Color lightBG = Color(0xfff3f4f9);
+//  static Color lightBG = Color(0xfff3f4f9);
+  static Color lightBG = Color(0xfff8fff7);
   static Color darkBG = Color(0xff2B2B2B);
 
   static ThemeData lightTheme = ThemeData(
@@ -32,13 +34,12 @@ class Constants {
       textTheme: TextTheme(
         headline6: TextStyle(
           color: Colors.black,
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
+          fontSize: 18,
+          fontWeight: FontWeight.w900,
           fontFamily: 'Lato-Regular',
         ),
       ),
     ),
-     
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -49,7 +50,7 @@ class Constants {
     accentColor: darkAccent,
     scaffoldBackgroundColor: darkBG,
     cursorColor: darkAccent,
-     bottomAppBarTheme: BottomAppBarTheme(
+    bottomAppBarTheme: BottomAppBarTheme(
       elevation: 0,
       color: darkBG,
     ),
@@ -59,7 +60,7 @@ class Constants {
         headline6: TextStyle(
           color: lightBG,
           fontSize: 20,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w900,
           fontFamily: 'Lato-Regular',
         ),
       ),
@@ -86,24 +87,24 @@ class ThemeNotifier extends ChangeNotifier {
     _darkTheme = true;
     _loadfromPrefs();
   }
-  toggleTheme(){
+  toggleTheme() {
     _darkTheme = !_darkTheme;
     _saveToPrefs();
     notifyListeners();
   }
 
-  _initPrefs()async{
-    if(_prefs == null)
-      _prefs = await SharedPreferences.getInstance();
+  _initPrefs() async {
+    if (_prefs == null) _prefs = await SharedPreferences.getInstance();
   }
-  _loadfromPrefs()async{
+
+  _loadfromPrefs() async {
     await _initPrefs();
     _darkTheme = _prefs.getBool(key) ?? true;
     notifyListeners();
   }
-  _saveToPrefs()async{
+
+  _saveToPrefs() async {
     await _initPrefs();
     _prefs.setBool(key, _darkTheme);
   }
 }
-
