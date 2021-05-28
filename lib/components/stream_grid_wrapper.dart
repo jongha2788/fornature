@@ -31,11 +31,17 @@ class StreamGridWrapper extends StatelessWidget {
       stream: stream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          var list = snapshot.data.documents.toList();
+          // var list = snapshot.data.documents.toList();
+          var list = snapshot.data.docs.toList();
           return list.length == 0
-              ? Container(
-                  child: Center(
-                    child: Text('No Posts'),
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(150.0),
+                    child: Text(
+                      'No Posts Yet',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 20.0),
+                    ),
                   ),
                 )
               : GridView.builder(

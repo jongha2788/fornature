@@ -1,4 +1,4 @@
-/*import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +8,7 @@ import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/widgets/userpost.dart';
 
 class Timeline extends StatelessWidget {
-  
- final  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,21 +17,21 @@ class Timeline extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          'Wooble',
+          'ChoHaengGil',
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
-        centerTitle: false,
-        actions: [
+        centerTitle: true,
+        /* actions: [
           IconButton(
             icon: Icon(CupertinoIcons.chat_bubble_2_fill,
                 size: 30.0, color: Theme.of(context).accentColor),
             onPressed: () {
-              Navigator.push(
-                  context, CupertinoPageRoute(builder: (_) => Chats()));
+              // Navigator.push(
+              //    context, CupertinoPageRoute(builder: (_) => Chats()));
             },
           ),
           SizedBox(width: 20.0),
-        ],
+        ],*/
       ),
       body: ListView(
         shrinkWrap: true,
@@ -69,4 +68,3 @@ class Timeline extends StatelessWidget {
     scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(value)));
   }
 }
-*/
