@@ -1,4 +1,4 @@
-/*import 'dart:async';
+import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -58,7 +58,6 @@ class _SearchState extends State<Search> {
   removeFromList(index) {
     filteredUsers.removeAt(index);
   }
-
 
   @override
   void initState() {
@@ -164,10 +163,12 @@ class _SearchState extends State<Search> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (_) => Conversation(
-                            userId: doc.id,
-                            chatId: 'newChat',
-                          ),
+                          // builder: (_) => Conversation(
+                          //   userId: doc.id,
+                          //   chatId: 'newChat',
+                          // ),
+                          builder: (_) =>
+                              Profile(profileId: firebaseAuth.currentUser.uid),
                         ),
                       );
                     },
@@ -216,4 +217,3 @@ class _SearchState extends State<Search> {
     );
   }
 }
-*/
