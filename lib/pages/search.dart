@@ -1,4 +1,4 @@
-/*import 'dart:async';
+import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +10,8 @@ import 'package:fornature/models/user.dart';
 import 'package:fornature/pages/profile.dart';
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/widgets/indicators.dart';
+
+import 'notification.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -58,7 +60,6 @@ class _SearchState extends State<Search> {
   removeFromList(index) {
     filteredUsers.removeAt(index);
   }
-
 
   @override
   void initState() {
@@ -120,7 +121,32 @@ class _SearchState extends State<Search> {
             ),
           ),
         ),
+        Container (
+          child :     Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: GestureDetector(
+              onTap: () {
+                //Navigator.pop(context);
+                  Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (_) => Activities()));
+              } ,
+              child: Icon(
+                  CupertinoIcons.camera_on_rectangle,
+                  size: 25.0,
+                
+                //'icon',
+                //style: TextStyle(
+                //  fontSize: 13.0,
+                 // fontWeight: FontWeight.w900,
+                 // color: Theme.of(context).accentColor,
+                //),
+
+              ),
+            ),
+          ),
+          ),
       ],
+
     );
   }
 
@@ -164,10 +190,12 @@ class _SearchState extends State<Search> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (_) => Conversation(
-                            userId: doc.id,
-                            chatId: 'newChat',
-                          ),
+                          // builder: (_) => Conversation(
+                          //   userId: doc.id,
+                          //   chatId: 'newChat',
+                          // ),
+                          builder: (_) =>
+                              Profile(profileId: firebaseAuth.currentUser.uid),
                         ),
                       );
                     },
@@ -216,4 +244,3 @@ class _SearchState extends State<Search> {
     );
   }
 }
-*/
