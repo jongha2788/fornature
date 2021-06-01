@@ -131,7 +131,7 @@ class _SearchState extends State<Search> {
                       .push(CupertinoPageRoute(builder: (_) => Activities()));
               } ,
               child: Icon(
-                  CupertinoIcons.camera_on_rectangle,
+                  CupertinoIcons.bell_solid,
                   size: 25.0,
                 
                 //'icon',
