@@ -53,7 +53,10 @@ dependencies:
   image_cropper: ^1.4.0
   shared_preferences: ^2.0.5
   data_connection_checker: ^0.3.4
-  
+  qrscan: ^0.2.22
+  image_gallery_saver: ^1.6.9
+  permission_handler: ^8.0.0+2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
