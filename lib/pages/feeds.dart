@@ -19,7 +19,7 @@ class Timeline extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          'ChoHaengGil',
+          '초행길 커뮤니티',
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
         centerTitle: true,

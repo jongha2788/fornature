@@ -1,6 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../pages/QRpage.dart';
+import '../pages/kakao.dart';
 import '../posts/create_post.dart';
 //import 'file:///C:/Users/success/fornature/lib/posts/create_post.dart';
 
@@ -77,6 +79,8 @@ class FabContainer extends StatelessWidget {
                   // kakao 넣는 페이지!!!!
                   ///Feature coming soon
                 //  Navigator.pop(context);
+              Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (_) => KakaoAPI()));
                 },
               ),
               ListTile(
@@ -89,8 +93,8 @@ class FabContainer extends StatelessWidget {
                   //QR넣는 페이지!!!!!
                  // Navigator.pop(context);
 
-                //  Navigator.of(context)
-                //      .push(CupertinoPageRoute(builder: (_) => CreatePost()));
+                Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (_) => QrcodeScanner()));
                 },
               ),
              /* ListTile(
