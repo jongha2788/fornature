@@ -7,6 +7,8 @@ import 'package:fornature/pages/notification.dart';
 import 'package:fornature/pages/profile.dart';
 import 'package:fornature/pages/search.dart';
 import 'package:fornature/pages/feeds.dart';
+import 'package:fornature/pages/mapping.dart';
+
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/pages/base_map.dart';
 
@@ -20,16 +22,17 @@ class _TabScreenState extends State<TabScreen> {
 
   List pages = [
     {
+      // mapping 
       'title': 'Home',
-      'icon': CupertinoIcons.home,
+      'icon': CupertinoIcons.map,
       'page': BaseMapPage(),
       'index': 0,
     },
     {
-      // 'title': 'Search',
-      // 'icon': CupertinoIcons.search,
-      // 'page': Search(),
-      // 'index': 1,
+        'title': 'Community',
+      'icon': CupertinoIcons.person_2_fill,
+      'page': Timeline(),
+      'index': 1,
     },
     {
       'title': 'unsee',
@@ -38,10 +41,15 @@ class _TabScreenState extends State<TabScreen> {
       'index': 2,
     },
     {
-      'title': 'Notification',
-      'icon': CupertinoIcons.bell_solid,
-      'page': Activities(),
+//commuinity
+      'title': 'Search',
+      'icon': CupertinoIcons.search,
+      'page': Search(),
       'index': 3,
+    //  'title': 'Notification',
+    //  'icon': CupertinoIcons.bell_solid,
+    //  'page': Activities(),
+    //  'index': 3,
     },
     {
       'title': 'Profile',
@@ -86,7 +94,7 @@ class _TabScreenState extends State<TabScreen> {
                           color: item['index'] != _page
                               ? Colors.grey
                               : Theme.of(context).accentColor,
-                          size: 20.0,
+                          size: 25.0,
                         ),
                         onPressed: () => navigationTapped(item['index']),
                       ),

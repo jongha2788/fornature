@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fornature/components/notification_stream_wrapper.dart';
 import 'package:fornature/models/notification.dart';
 import 'package:fornature/utils/firebase.dart';
@@ -19,6 +20,13 @@ class _ActivitiesState extends State<Activities> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+              icon: Icon(Feather.x),
+              onPressed: () {
+              
+                Navigator.pop(context);
+              },
+            ),
         automaticallyImplyLeading: false,
         title: Text('Notifications'),
         centerTitle: true,

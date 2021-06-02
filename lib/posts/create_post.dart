@@ -41,7 +41,7 @@ class _CreatePostState extends State<CreatePost> {
                 Navigator.pop(context);
               },
             ),
-            title: Text('FlutterSocial'.toUpperCase()),
+            title: Text('Make a Post'.toUpperCase()),
             centerTitle: true,
             actions: [
               GestureDetector(
