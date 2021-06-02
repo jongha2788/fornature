@@ -31,7 +31,8 @@ class StreamBuilderWrapper extends StatelessWidget {
       stream: stream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          var list = snapshot.data.documents.toList();
+          // var list = snapshot.data.documents.toList();
+          var list = snapshot.data.docs.toList();
           return list.length == 0
               ? Padding(
                   padding: const EdgeInsets.only(top: 100.0),

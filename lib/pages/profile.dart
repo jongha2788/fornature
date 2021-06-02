@@ -2,17 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fornature/auth/register/register.dart';
-import 'package:fornature/components/stream_builder_wrapper.dart';
 import 'package:fornature/components/stream_grid_wrapper.dart';
 import 'package:fornature/models/post.dart';
 import 'package:fornature/models/user.dart';
 import 'package:fornature/screens/edit_profile.dart';
-import 'package:fornature/screens/settings.dart';
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/widgets/post_tiles.dart';
-import 'package:fornature/widgets/posts_view.dart';
 
 class Profile extends StatefulWidget {
   final profileId;
@@ -23,13 +19,13 @@ class Profile extends StatefulWidget {
   _ProfileState createState() => _ProfileState();
 }
 
-class _ProfileState extends State<Profile>  {
+class _ProfileState extends State<Profile> {
   User user;
   bool isLoading = false;
   int postCount = 0;
   int followersCount = 0;
   int followingCount = 0;
-  bool isToggle = true;
+  // bool isToggle = true; // list or grid view of posts
   bool isFollowing = false;
   UserModel users;
   final DateTime timestamp = DateTime.now();
@@ -61,12 +57,12 @@ class _ProfileState extends State<Profile>  {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('WOOBLE'),
+        title: Text('My Profile'),
         actions: [
           widget.profileId == firebaseAuth.currentUser.uid
               ? Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 25.0),
+                    padding: const EdgeInsets.only(bottom: 3.0, right: 20.0),
                     child: GestureDetector(
                       onTap: () {
                         firebaseAuth.signOut();
@@ -76,7 +72,7 @@ class _ProfileState extends State<Profile>  {
                       child: Text(
                         'Log Out',
                         style: TextStyle(
-                            fontWeight: FontWeight.w900, fontSize: 15.0),
+                            fontWeight: FontWeight.w600, fontSize: 14.0),
                       ),
                     ),
                   ),
@@ -92,11 +88,12 @@ class _ProfileState extends State<Profile>  {
             floating: false,
             toolbarHeight: 5.0,
             collapsedHeight: 6.0,
-            expandedHeight: 220.0,
+            expandedHeight: 210.0,
             flexibleSpace: FlexibleSpaceBar(
               background: StreamBuilder(
                 stream: usersRef.doc(widget.profileId).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  /* profile pic */
                   if (snapshot.hasData) {
                     UserModel user = UserModel.fromJson(snapshot.data.data());
                     return Column(
@@ -106,13 +103,14 @@ class _ProfileState extends State<Profile>  {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
+                              padding: const EdgeInsets.only(left: 28.0),
                               child: CircleAvatar(
                                 backgroundImage: NetworkImage(user?.photoUrl),
-                                radius: 40.0,
+                                radius: 50.0,
                               ),
                             ),
                             SizedBox(width: 20.0),
+                            /* username */
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -132,24 +130,25 @@ class _ProfileState extends State<Profile>  {
                                           child: Text(
                                             user?.username,
                                             style: TextStyle(
-                                                fontSize: 15.0,
+                                                fontSize: 23.0,
                                                 fontWeight: FontWeight.w900),
                                             maxLines: null,
                                           ),
                                         ),
-                                        Container(
-                                          width: 130.0,
-                                          child: Text(
-                                            user?.country,
-                                            style: TextStyle(
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        SizedBox(width: 10.0),
+                                        // Container(
+                                        //   width: 130.0,
+                                        //   child: Text(
+                                        //     user?.country,
+                                        //     style: TextStyle(
+                                        //       fontSize: 12.0,
+                                        //       fontWeight: FontWeight.w600,
+                                        //     ),
+                                        //     maxLines: 1,
+                                        //     overflow: TextOverflow.ellipsis,
+                                        //   ),
+                                        // ),
+                                        /* email account */
+                                        SizedBox(height: 5.0),
                                         Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
@@ -159,139 +158,161 @@ class _ProfileState extends State<Profile>  {
                                               user?.email,
                                               style: TextStyle(
                                                 // color: Color(0xff4D4D4D),
-                                                fontSize: 10.0,
+                                                fontSize: 15.0,
                                               ),
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
-                                    widget.profileId == currentUserId()
-                                        ? InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                CupertinoPageRoute(
-                                                  builder: (_) => Setting(),
-                                                ),
-                                              );
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Icon(CupertinoIcons.settings,
-                                                    color: Theme.of(context)
-                                                        .accentColor),
-                                                Text(
-                                                  'settings',
-                                                  style:
-                                                      TextStyle(fontSize: 11.5),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        : buildLikeButton()
+                                    /* settings button */
+                                    // widget.profileId == currentUserId()
+                                    //     ? InkWell(
+                                    //         onTap: () {
+                                    //           Navigator.of(context).push(
+                                    //             CupertinoPageRoute(
+                                    //               builder: (_) => Setting(),
+                                    //             ),
+                                    //           );
+                                    //         },
+                                    //         child: Column(
+                                    //           children: [
+                                    //             Icon(
+                                    //               Icons.settings,
+                                    //               // color: Theme.of(context)
+                                    //               //     .accentColor
+                                    //             ),
+                                    //             Text(
+                                    //               'settings',
+                                    //               style:
+                                    //                   TextStyle(fontSize: 11.5),
+                                    //             )
+                                    //           ],
+                                    //         ),
+                                    //       )
+                                    //     : buildLikeButton()
                                   ],
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                          child: user.bio.isEmpty
-                              ? Container()
-                              : Container(
-                                  width: 200,
-                                  child: Text(
-                                    user?.bio,
-                                    style: TextStyle(
-                                      //    color: Color(0xff4D4D4D),
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    maxLines: null,
-                                  ),
-                                ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Container(
-                          height: 50.0,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 30.0),
+                        /* bio */
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 10.0, left: 20.0),
+                        //   child: user.bio.isEmpty
+                        //       ? Container()
+                        //       : Container(
+                        //           width: 200,
+                        //           child: Text(
+                        //             user?.bio,
+                        //             style: TextStyle(
+                        //               //    color: Color(0xff4D4D4D),
+                        //               fontSize: 10.0,
+                        //               fontWeight: FontWeight.w600,
+                        //             ),
+                        //             maxLines: null,
+                        //           ),
+                        //         ),
+                        // ),
+
+                        /* POSTS, FOLLOWERS, FOLLOWING */
+                        SizedBox(height: 15.0),
+                        Center(
+                          child: Container(
+                            height: 50.0,
+                            width: 350.0,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                StreamBuilder(
-                                  stream: postRef
-                                      .where('ownerId',
-                                          isEqualTo: widget.profileId)
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasData) {
-                                      QuerySnapshot snap = snapshot.data;
-                                      List<DocumentSnapshot> docs = snap.docs;
-                                      return buildCount(
-                                          "POSTS", docs?.length ?? 0);
-                                    } else {
-                                      return buildCount("POSTS", 0);
-                                    }
-                                  },
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: Container(
+                                    width: 70.0,
+                                    child: StreamBuilder(
+                                      stream: postRef
+                                          .where('ownerId',
+                                              isEqualTo: widget.profileId)
+                                          .snapshots(),
+                                      builder: (context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          QuerySnapshot snap = snapshot.data;
+                                          List<DocumentSnapshot> docs =
+                                              snap.docs;
+                                          return buildCount(
+                                              "POSTS", docs?.length ?? 0);
+                                        } else {
+                                          return buildCount("POSTS", 0);
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ),
+                                /* line between posts and followers */
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 15.0),
                                   child: Container(
                                     height: 50.0,
                                     width: 0.3,
-                                    color: Colors.grey,
+                                    color: Colors.black,
                                   ),
                                 ),
-                                StreamBuilder(
-                                  stream: followersRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowers')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasData) {
-                                      QuerySnapshot snap = snapshot.data;
-                                      List<DocumentSnapshot> docs = snap.docs;
-                                      return buildCount(
-                                          "FOLLOWERS", docs?.length ?? 0);
-                                    } else {
-                                      return buildCount("FOLLOWERS", 0);
-                                    }
-                                  },
+                                Container(
+                                  width: 90.0,
+                                  child: StreamBuilder(
+                                    stream: followersRef
+                                        .doc(widget.profileId)
+                                        .collection('userFollowers')
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasData) {
+                                        QuerySnapshot snap = snapshot.data;
+                                        List<DocumentSnapshot> docs = snap.docs;
+                                        return buildCount(
+                                            "FOLLOWERS", docs?.length ?? 0);
+                                      } else {
+                                        return buildCount("FOLLOWERS", 0);
+                                      }
+                                    },
+                                  ),
                                 ),
+                                /* line between followers and following */
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 15.0),
                                   child: Container(
                                     height: 50.0,
                                     width: 0.3,
-                                    color: Colors.grey,
+                                    color: Colors.black,
                                   ),
                                 ),
-                                StreamBuilder(
-                                  stream: followingRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowing')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasData) {
-                                      QuerySnapshot snap = snapshot.data;
-                                      List<DocumentSnapshot> docs = snap.docs;
-                                      return buildCount(
-                                          "FOLLOWING", docs?.length ?? 0);
-                                    } else {
-                                      return buildCount("FOLLOWING", 0);
-                                    }
-                                  },
+                                Container(
+                                  width: 90.0,
+                                  child: StreamBuilder(
+                                    stream: followingRef
+                                        .doc(widget.profileId)
+                                        .collection('userFollowing')
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasData) {
+                                        QuerySnapshot snap = snapshot.data;
+                                        List<DocumentSnapshot> docs = snap.docs;
+                                        return buildCount(
+                                            "FOLLOWING", docs?.length ?? 0);
+                                      } else {
+                                        return buildCount("FOLLOWING", 0);
+                                      }
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
+                        //),
                         buildProfileButton(user),
                       ],
                     );
@@ -315,12 +336,14 @@ class _ProfileState extends State<Profile>  {
                             'All Posts',
                             style: TextStyle(fontWeight: FontWeight.w900),
                           ),
-                          Spacer(),
-                          buildIcons(),
+                          /* view mode icon */
+                          // Spacer(),
+                          // buildIcons(),
                         ],
                       ),
                     ),
-                    buildPostView()
+                    // buildPostView()
+                    buildGridPost()
                   ],
                 );
               },
@@ -331,11 +354,12 @@ class _ProfileState extends State<Profile>  {
     );
   }
 
+/*
 //show the toggling icons "grid" or "list" view.
   buildIcons() {
     if (isToggle) {
       return IconButton(
-          icon: Icon(Feather.list),
+          icon: Icon(Icons.list),
           onPressed: () {
             setState(() {
               isToggle = false;
@@ -343,7 +367,7 @@ class _ProfileState extends State<Profile>  {
           });
     } else if (isToggle == false) {
       return IconButton(
-        icon: Icon(Icons.grid_on),
+        icon: Icon(Icons.grid_view),
         onPressed: () {
           setState(() {
             isToggle = true;
@@ -352,22 +376,25 @@ class _ProfileState extends State<Profile>  {
       );
     }
   }
+*/
 
   buildCount(String label, int count) {
     return Column(
       children: <Widget>[
+        /* count text style */
         Text(
           count.toString(),
           style: TextStyle(
-              fontSize: 16.0,
+              fontSize: 20.0,
               fontWeight: FontWeight.w900,
               fontFamily: 'Ubuntu-Regular'),
         ),
-        SizedBox(height: 3.0),
+        SizedBox(height: 4.0),
+        /* category text style */
         Text(
           label,
           style: TextStyle(
-              fontSize: 15,
+              fontSize: 12.0,
               fontWeight: FontWeight.w400,
               fontFamily: 'Ubuntu-Regular'),
         )
@@ -405,28 +432,32 @@ class _ProfileState extends State<Profile>  {
     }
   }
 
+/* Edit Profile Button */
   buildButton({String text, Function function}) {
     return Center(
       child: GestureDetector(
         onTap: function,
         child: Container(
-          height: 40.0,
-          width: 200.0,
+          height: 30.0,
+          width: 380.0,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0),
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Theme.of(context).accentColor,
-                Color(0xff597FDB),
-              ],
-            ),
+            borderRadius: BorderRadius.circular(3.0),
+            border: Border.all(width: 0.3, color: Colors.black),
+            // gradient: LinearGradient(
+            //   begin: Alignment.topRight,
+            //   end: Alignment.bottomLeft,
+            //   colors: [
+            //     Theme.of(context).accentColor,
+            //     Color(0x000000),
+            //     // Color(0xff597FDB),
+            //   ],
+            // ),
           ),
           child: Center(
             child: Text(
               text,
-              style: TextStyle(color: Colors.white),
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
             ),
           ),
         ),
@@ -508,6 +539,7 @@ class _ProfileState extends State<Profile>  {
     });
   }
 
+/*
   buildPostView() {
     if (isToggle == true) {
       return buildGridPost();
@@ -536,22 +568,26 @@ class _ProfileState extends State<Profile>  {
       },
     );
   }
+*/
 
   buildGridPost() {
-    return StreamGridWrapper(
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      stream: postRef
-          .where('ownerId', isEqualTo: widget.profileId)
-          .orderBy('timestamp', descending: true)
-          .snapshots(),
-      physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (_, DocumentSnapshot snapshot) {
-        PostModel posts = PostModel.fromJson(snapshot.data());
-        return PostTile(
-          post: posts,
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: StreamGridWrapper(
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        stream: postRef
+            .where('ownerId', isEqualTo: widget.profileId)
+            .orderBy('timestamp', descending: true)
+            .snapshots(),
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (_, DocumentSnapshot snapshot) {
+          PostModel posts = PostModel.fromJson(snapshot.data());
+          return PostTile(
+            post: posts,
+          );
+        },
+      ),
     );
   }
 
