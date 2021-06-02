@@ -8,6 +8,7 @@ import 'package:fornature/pages/profile.dart';
 import 'package:fornature/pages/search.dart';
 import 'package:fornature/pages/feeds.dart';
 import 'package:fornature/utils/firebase.dart';
+import 'package:fornature/pages/base_map.dart';
 
 class TabScreen extends StatefulWidget {
   @override
@@ -19,10 +20,10 @@ class _TabScreenState extends State<TabScreen> {
 
   List pages = [
     {
-      // 'title': 'Home',
-      // 'icon': CupertinoIcons.home,
-      // 'page': Timeline(),
-      // 'index': 0,
+      'title': 'Home',
+      'icon': CupertinoIcons.home,
+      'page': BaseMapPage(),
+      'index': 0,
     },
     {
       // 'title': 'Search',
