@@ -25,8 +25,10 @@ class _ProfileState extends State<Profile> {
   int postCount = 0;
   int followersCount = 0;
   int followingCount = 0;
+  //int visithistory = 0;
   // bool isToggle = true; // list or grid view of posts
   bool isFollowing = false;
+  bool isvisitHistory = false;
   UserModel users;
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
@@ -39,6 +41,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
+    // checkIfvisithistory();
   }
 
   checkIfFollowing() async {
@@ -57,7 +60,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('My Profile'),
+        title: Text('내 프로필'),
         actions: [
           widget.profileId == firebaseAuth.currentUser.uid
               ? Center(
@@ -228,7 +231,7 @@ class _ProfileState extends State<Profile> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
                                   child: Container(
-                                    width: 70.0,
+                                    width: 50.0,
                                     child: StreamBuilder(
                                       stream: postRef
                                           .where('ownerId',
@@ -242,9 +245,9 @@ class _ProfileState extends State<Profile> {
                                           List<DocumentSnapshot> docs =
                                               snap.docs;
                                           return buildCount(
-                                              "POSTS", docs?.length ?? 0);
+                                              "포스트", docs?.length ?? 0);
                                         } else {
-                                          return buildCount("POSTS", 0);
+                                          return buildCount("포스트", 0);
                                         }
                                       },
                                     ),
@@ -260,7 +263,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                                 Container(
-                                  width: 90.0,
+                                  width: 50.0,
                                   child: StreamBuilder(
                                     stream: followersRef
                                         .doc(widget.profileId)
@@ -272,9 +275,9 @@ class _ProfileState extends State<Profile> {
                                         QuerySnapshot snap = snapshot.data;
                                         List<DocumentSnapshot> docs = snap.docs;
                                         return buildCount(
-                                            "FOLLOWERS", docs?.length ?? 0);
+                                            "팔로워", docs?.length ?? 0);
                                       } else {
-                                        return buildCount("FOLLOWERS", 0);
+                                        return buildCount("팔로워", 0);
                                       }
                                     },
                                   ),
@@ -289,7 +292,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                                 Container(
-                                  width: 90.0,
+                                  width: 50.0,
                                   child: StreamBuilder(
                                     stream: followingRef
                                         .doc(widget.profileId)
@@ -301,9 +304,38 @@ class _ProfileState extends State<Profile> {
                                         QuerySnapshot snap = snapshot.data;
                                         List<DocumentSnapshot> docs = snap.docs;
                                         return buildCount(
-                                            "FOLLOWING", docs?.length ?? 0);
+                                            "팔로잉", docs?.length ?? 0);
                                       } else {
-                                        return buildCount("FOLLOWING", 0);
+                                        return buildCount("팔로잉", 0);
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 15.0),
+                                  child: Container(
+                                    height: 50.0,
+                                    width: 0.3,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Container(
+                                  width: 50.0,
+                                  child: StreamBuilder(
+                                    stream: visithistoryRef
+                                        .doc(currentUserId())
+                                        .collection('visithistory')
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasData) {
+                                        QuerySnapshot snap = snapshot.data;
+                                        List<DocumentSnapshot> docs = snap.docs;
+                                        //print(docs[0].get('Count'));
+                                        return buildCount(
+                                            "방문기록",docs[0]?.get('Count') ?? 0);
+                                      } else {
+                                        return buildCount("방문기록", 0);
                                       }
                                     },
                                   ),
@@ -333,7 +365,7 @@ class _ProfileState extends State<Profile> {
                       child: Row(
                         children: [
                           Text(
-                            'All Posts',
+                            '모든 포스트',
                             style: TextStyle(fontWeight: FontWeight.w900),
                           ),
                           /* view mode icon */
@@ -407,7 +439,7 @@ class _ProfileState extends State<Profile> {
     bool isMe = widget.profileId == firebaseAuth.currentUser.uid;
     if (isMe) {
       return buildButton(
-          text: "Edit Profile",
+          text: "프로필 수정",
           function: () {
             Navigator.of(context).push(
               CupertinoPageRoute(
