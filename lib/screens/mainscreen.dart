@@ -10,6 +10,7 @@ import 'package:fornature/pages/feeds.dart';
 import 'package:fornature/pages/mapping.dart';
 
 import 'package:fornature/utils/firebase.dart';
+import 'package:fornature/pages/base_map.dart';
 
 class TabScreen extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _TabScreenState extends State<TabScreen> {
       // mapping 
       'title': 'Home',
       'icon': CupertinoIcons.map,
-      'page': Mapping(),
+      'page': BaseMapPage(),
       'index': 0,
     },
     {
