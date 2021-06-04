@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:path_provider/path_provider.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -89,7 +92,7 @@ class PostsViewModel extends ChangeNotifier {
   }
 
   //Functions
-  pickImage({bool camera = false}) async {
+  pickImage({bool camera = false, bool nopic = false}) async {
     loading = true;
     notifyListeners();
     try {
@@ -109,8 +112,8 @@ class PostsViewModel extends ChangeNotifier {
           toolbarTitle: 'Crop Image',
           toolbarColor: Constants.lightAccent,
           toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false,
+          initAspectRatio: CropAspectRatioPreset.square,
+          lockAspectRatio: true,
         ),
         iosUiSettings: IOSUiSettings(
           minimumAspectRatio: 1.0,

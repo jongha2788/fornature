@@ -33,6 +33,7 @@ class _EditProfileState extends State<EditProfile> {
       progressIndicator: circularProgress(context),
       inAsyncCall: viewModel.loading,
       child: Scaffold(
+        backgroundColor: Colors.white,
         key: viewModel.scaffoldKey,
         appBar: AppBar(
           centerTitle: true,

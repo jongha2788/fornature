@@ -29,41 +29,49 @@ class _LoginState extends State<Login> {
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           children: [
-            SizedBox(height: 60.0),
+            // logo
+            SizedBox(height: 130.0),
             Container(
-              height: 170.0,
+              height: 110.0,
               width: MediaQuery.of(context).size.width,
               child: Image.asset(
-                'assets/images/login.png',
+                'assets/images/logo.png',
               ),
             ),
-            SizedBox(height: 10.0),
+            // welcome messages
+            SizedBox(height: 12.0),
             Center(
               child: Text(
-                'Welcome back!',
+                'Welcome Back!',
                 style: TextStyle(
-                  fontSize: 23.0,
-                  fontWeight: FontWeight.w900,
-                ),
+                    fontSize: 23.0,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'NanumSquare_acEB'),
               ),
             ),
+            SizedBox(height: 5.0),
             Center(
               child: Text(
                 'Log into your account and get started!',
                 style: TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 15.0,
                   fontWeight: FontWeight.w300,
-                  color: Theme.of(context).accentColor,
+                  // color: Theme.of(context).accentColor,
                 ),
               ),
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 30.0),
             buildForm(context, viewModel),
             SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Don\'t have an account?'),
+                Text(
+                  'Don\'t have an account?  ',
+                  style: TextStyle(
+                    fontSize: 15.0,
+                  ),
+                ),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)
@@ -72,8 +80,9 @@ class _LoginState extends State<Login> {
                   child: Text(
                     'Sign up',
                     style: TextStyle(
+                      fontSize: 15.0,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).accentColor,
+                      // color: Theme.of(context).accentColor,
                     ),
                   ),
                 ),
@@ -126,36 +135,42 @@ class _LoginState extends State<Login> {
                 onTap: () => viewModel.forgotPassword(),
                 child: Container(
                   width: 130,
-                  height: 40,
+                  //height: 40,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
                       'Forgot Password?',
                       style: TextStyle(
+                        fontSize: 13.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ), 
+                  ),
                 ),
               ),
             ),
           ),
           SizedBox(height: 10.0),
           Container(
-            height: 45.0,
+            height: 35.0,
             width: 180.0,
+            // decoration: BoxDecoration(
+            //   borderRadius: BorderRadius.circular(40.0),
+            //   border: Border.all(color: Colors.black, width: 0.5),
+            // ),
             child: RaisedButton(
-              highlightElevation: 4.0,
+              // highlightElevation: 4.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40.0),
               ),
-              color: Theme.of(context).accentColor,
+              //color: Theme.of(context).accentColor,
+              color: Colors.white,
               child: Text(
-                'Log in'.toUpperCase(),
+                'log in'.toUpperCase(),
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black,
                 ),
               ),
               onPressed: () => viewModel.login(context),

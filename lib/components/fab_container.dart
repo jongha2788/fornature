@@ -69,28 +69,44 @@ class FabContainer extends StatelessWidget {
               Divider(),
               ListTile(
                 leading: Icon(
-                  CupertinoIcons.chart_pie_fill,
+                  CupertinoIcons.money_dollar_circle,
                   size: 25.0,
                 ),
-                title: Text('Post on status'),
+                title: Text('KAKAO API'),
                 onTap: () {
+                  // kakao 넣는 페이지!!!!
                   ///Feature coming soon
-                  Navigator.pop(context);
+                //  Navigator.pop(context);
                 },
               ),
               ListTile(
                 leading: Icon(
+                  CupertinoIcons.qrcode_viewfinder,
+                  size: 25.0,
+                ),
+                title: Text('QR scanner'),
+                onTap: () {
+                  //QR넣는 페이지!!!!!
+                 // Navigator.pop(context);
+
+                //  Navigator.of(context)
+                //      .push(CupertinoPageRoute(builder: (_) => CreatePost()));
+                },
+              ),
+             /* ListTile(
+                leading: Icon(
                   CupertinoIcons.camera_on_rectangle,
                   size: 25.0,
                 ),
-                title: Text('Make a Post'),
+                title: Text('Make a post'),
                 onTap: () {
+                 // QR넣는 페이지!!!!!
                   Navigator.pop(context);
 
                   Navigator.of(context)
                       .push(CupertinoPageRoute(builder: (_) => CreatePost()));
                 },
-              ),
+              ),*/
             ],
           ),
         );

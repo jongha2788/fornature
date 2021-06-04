@@ -61,7 +61,7 @@ class EditProfileViewModel extends ChangeNotifier {
         loading = true;
         notifyListeners();
         bool success = await userService.updateProfile(
-        //  user: user,
+          //  user: user,
           image: image,
           username: username,
           bio: bio,
@@ -102,8 +102,8 @@ class EditProfileViewModel extends ChangeNotifier {
           toolbarTitle: 'Crop Image',
           toolbarColor: Constants.lightAccent,
           toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false,
+          initAspectRatio: CropAspectRatioPreset.square,
+          lockAspectRatio: true,
         ),
         iosUiSettings: IOSUiSettings(
           minimumAspectRatio: 1.0,

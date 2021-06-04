@@ -11,6 +11,8 @@ import 'package:fornature/pages/profile.dart';
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/widgets/indicators.dart';
 
+import 'notification.dart';
+
 class Search extends StatefulWidget {
   @override
   _SearchState createState() => _SearchState();
@@ -107,7 +109,7 @@ class _SearchState extends State<Search> {
                     },
                     child: Icon(Feather.x, size: 12.0, color: Colors.black),
                   ),
-                  contentPadding: EdgeInsets.only(bottom: 10.0, left: 10.0),
+                  contentPadding: EdgeInsets.only(bottom: 12.0, left: 10.0),
                   border: InputBorder.none,
                   counterText: '',
                   hintText: 'Search...',
@@ -115,6 +117,29 @@ class _SearchState extends State<Search> {
                     fontSize: 15.0,
                   ),
                 ),
+              ),
+            ),
+          ),
+        ),
+        Container(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 3.0, left: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                //Navigator.pop(context);
+                Navigator.of(context)
+                    .push(CupertinoPageRoute(builder: (_) => Activities()));
+              },
+              child: Icon(
+                CupertinoIcons.bell,
+                size: 25.0,
+
+                //'icon',
+                //style: TextStyle(
+                //  fontSize: 13.0,
+                // fontWeight: FontWeight.w900,
+                // color: Theme.of(context).accentColor,
+                //),
               ),
             ),
           ),
@@ -183,15 +208,15 @@ class _SearchState extends State<Search> {
                         // border:
                         //     Border.all(color: Theme.of(context).accentColor),
                       ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text('Message',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
+                      // child: Center(
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(5.0),
+                      //     child: Text('Message',
+                      //         style: TextStyle(
+                      //             color: Colors.white,
+                      //             fontWeight: FontWeight.bold)),
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),

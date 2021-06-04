@@ -7,6 +7,8 @@ import 'package:fornature/models/post.dart';
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/widgets/userpost.dart';
 
+import '../posts/create_post.dart';
+
 class Timeline extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -21,6 +23,37 @@ class Timeline extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(top: 3.0, right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                //  Navigator.pop(context);
+                Navigator.of(context)
+                    .push(CupertinoPageRoute(builder: (_) => CreatePost()));
+              },
+              /*Text(
+                'Make a Post',
+                style: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w900,
+                  color: Theme.of(context).accentColor,
+                ),
+              ),*/
+              child: Icon(
+                CupertinoIcons.camera_on_rectangle,
+                size: 25.0,
+
+                //'icon',
+                //style: TextStyle(
+                //  fontSize: 13.0,
+                // fontWeight: FontWeight.w900,
+                // color: Theme.of(context).accentColor,
+                //),
+              ),
+            ),
+          ),
+        ],
         /* actions: [
           IconButton(
             icon: Icon(CupertinoIcons.chat_bubble_2_fill,

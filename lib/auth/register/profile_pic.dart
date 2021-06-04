@@ -26,25 +26,24 @@ class _ProfilePictureState extends State<ProfilePicture> {
         child: Scaffold(
           key: viewModel.scaffoldKey,
           appBar: AppBar(
-            title: Text('Add a profile picture'),
+            title: Text('Edit Profile Picture'),
             centerTitle: true,
           ),
           body: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            //padding: EdgeInsets.symmetric(horizontal: 30.0),
+            padding: EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
             children: [
               InkWell(
                 onTap: () => showImageChoices(context, viewModel),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width - 30,
+                  height: MediaQuery.of(context).size.width - 50,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.all(
-                      Radius.circular(3.0),
+                      Radius.circular(10.0),
                     ),
-                    border: Border.all(
-                      color: Theme.of(context).accentColor,
-                    ),
+                    // border: Border.all(color: Colors.black),
                   ),
                   child: viewModel.imgLink != null
                       ? CustomImage(
@@ -54,13 +53,21 @@ class _ProfilePictureState extends State<ProfilePicture> {
                           fit: BoxFit.cover,
                         )
                       : viewModel.mediaUrl == null
-                          ? Center(
-                              child: Text(
-                                'upload your profile picture',
-                                style: TextStyle(
-                                  color: Theme.of(context).accentColor,
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.camera_alt,
+                                  size: 60.0,
                                 ),
-                              ),
+                                Text(
+                                  'Upload your profile picture',
+                                  style: TextStyle(
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                              ],
                             )
                           : Image.file(
                               viewModel.mediaUrl,
@@ -73,12 +80,19 @@ class _ProfilePictureState extends State<ProfilePicture> {
               SizedBox(height: 10.0),
               Center(
                 child: RaisedButton(
-                  color: Theme.of(context).accentColor,
+                  // color: Theme.of(context).accentColor,
+                  color: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: Center(
-                    child: Text('done'.toUpperCase()),
+                    child: Text(
+                      'save'.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   onPressed: () => viewModel.uploadProfilePicture(context),
                 ),
