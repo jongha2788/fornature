@@ -1,8 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../posts/create_post.dart';
-//import 'file:///C:/Users/success/fornature/lib/posts/create_post.dart';
+import 'package:fornature/pages/kakao.dart';
+import 'package:fornature/pages/qrcode.dart';
+import 'package:fornature/posts/create_post.dart';
 
 class FabContainer extends StatelessWidget {
   final Widget page;
@@ -49,46 +50,63 @@ class FabContainer extends StatelessWidget {
       ),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .6,
+          heightFactor: .65,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.0),
+              SizedBox(height: 16.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Center(
-                  child: Text(
-                    'SELECT',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).accentColor),
+                padding: EdgeInsets.only(left: 20.0, bottom: 8.0),
+                child: Text(
+                  '선택하기',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Divider(),
               ListTile(
                 leading: Icon(
-                  CupertinoIcons.chart_pie_fill,
+                  CupertinoIcons.plus,
                   size: 25.0,
                 ),
-                title: Text('Post on status'),
+                title: Transform.translate(
+                  offset: Offset(-16, 0),
+                  child: Text('새 게시물'),
+                ),
                 onTap: () {
-                  ///Feature coming soon
-                  Navigator.pop(context);
+                  //  Navigator.pop(context);
+                  Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (_) => CreatePost()));
                 },
               ),
               ListTile(
                 leading: Icon(
-                  CupertinoIcons.camera_on_rectangle,
+                  CupertinoIcons.money_dollar_circle,
                   size: 25.0,
                 ),
-                title: Text('Make a Post'),
+                title: Transform.translate(
+                  offset: Offset(-16, 0),
+                  child: Text('카카오페이로 결제'),
+                ),
                 onTap: () {
-                  Navigator.pop(context);
-
                   Navigator.of(context)
-                      .push(CupertinoPageRoute(builder: (_) => CreatePost()));
+                      .push(CupertinoPageRoute(builder: (_) => KakaoAPI()));
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  CupertinoIcons.qrcode_viewfinder,
+                  size: 25.0,
+                ),
+                title: Transform.translate(
+                  offset: Offset(-16, 0),
+                  child: Text('QR 코드 스캔'),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                      CupertinoPageRoute(builder: (_) => QrcodeScanner()));
                 },
               ),
             ],

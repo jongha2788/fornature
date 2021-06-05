@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -53,6 +52,10 @@ dependencies:
   image_cropper: ^1.4.0
   shared_preferences: ^2.0.5
   data_connection_checker: ^0.3.4
+  naver_map_plugin: ^0.9.6
+  qrscan: ^0.2.22
+  image_gallery_saver: ^1.6.9
+  permission_handler: ^8.0.0+2
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +66,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -86,19 +88,25 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: Lato-Regular
-       fonts:
-         - asset: assets/fonts/Lato-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-     - family: Roboto-Regular
-       fonts:
-         - asset: assets/fonts/Roboto-Regular.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-     - family: Ubuntu-Regular
-       fonts:
-         - asset: assets/fonts/Ubuntu-Regular.ttf
+    - family: Lato-Regular
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+    #       - asset: fonts/Schyler-Italic.ttf
+    #         style: italic
+    - family: Roboto-Regular
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+    #       - asset: fonts/TrajanPro_Bold.ttf
+    #         weight: 700
+    - family: Ubuntu-Regular
+      fonts:
+        - asset: assets/fonts/Ubuntu-Regular.ttf
+    - family: SangSangFlowerRoad
+      fonts:
+        - asset: assets/fonts/SangSangFlowerRoad.otf
+    - family: NanumSquare_acEB
+      fonts:
+        - asset: assets/fonts/NanumSquare_acEB.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

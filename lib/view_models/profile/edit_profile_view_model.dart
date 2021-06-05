@@ -16,7 +16,7 @@ class EditProfileViewModel extends ChangeNotifier {
   UserService userService = UserService();
   final picker = ImagePicker();
   UserModel user;
-  String country;
+  // String country;
   String username;
   String bio;
   File image;
@@ -31,11 +31,11 @@ class EditProfileViewModel extends ChangeNotifier {
     imgLink = user.photoUrl;
   }
 
-  setCountry(String val) {
-    print('SetCountry $val');
-    country = val;
-    notifyListeners();
-  }
+  // setCountry(String val) {
+  //   print('SetCountry $val');
+  //   country = val;
+  //   notifyListeners();
+  // }
 
   setBio(String val) {
     print('SetBio$val');
@@ -55,17 +55,17 @@ class EditProfileViewModel extends ChangeNotifier {
     if (!form.validate()) {
       validate = true;
       notifyListeners();
-      showInSnackBar('Please fix the errors in red before submitting.');
+      showInSnackBar('진행을 위해 올바른 정보를 입력하세요.');
     } else {
       try {
         loading = true;
         notifyListeners();
         bool success = await userService.updateProfile(
-        //  user: user,
+          //  user: user,
           image: image,
           username: username,
           bio: bio,
-          country: country,
+          // country: country,
         );
         print(success);
         if (success) {
@@ -99,10 +99,10 @@ class EditProfileViewModel extends ChangeNotifier {
           CropAspectRatioPreset.ratio16x9
         ],
         androidUiSettings: AndroidUiSettings(
-          toolbarTitle: 'Crop Image',
-          toolbarColor: Constants.lightAccent,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
+          toolbarTitle: '사진 편집',
+          toolbarColor: Colors.white,
+          toolbarWidgetColor: Colors.black,
+          initAspectRatio: CropAspectRatioPreset.square,
           lockAspectRatio: false,
         ),
         iosUiSettings: IOSUiSettings(
@@ -115,7 +115,7 @@ class EditProfileViewModel extends ChangeNotifier {
     } catch (e) {
       loading = false;
       notifyListeners();
-      showInSnackBar('Cancelled');
+      showInSnackBar('취소');
     }
   }
 

@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fornature/components/fab_container.dart';
-import 'package:fornature/pages/notification.dart';
+import 'package:fornature/pages/base_map.dart';
 import 'package:fornature/pages/profile.dart';
 import 'package:fornature/pages/search.dart';
 import 'package:fornature/pages/feeds.dart';
+
 import 'package:fornature/utils/firebase.dart';
 
 class TabScreen extends StatefulWidget {
@@ -19,15 +20,16 @@ class _TabScreenState extends State<TabScreen> {
 
   List pages = [
     {
-      'title': 'Home',
-      'icon': CupertinoIcons.home,
-      'page': Timeline(),
+      // mapping
+      'title': 'Map',
+      'icon': CupertinoIcons.map,
+      'page': BaseMapPage(),
       'index': 0,
     },
     {
-      'title': 'Search',
-      'icon': CupertinoIcons.search,
-      'page': Search(),
+      'title': 'Community',
+      'icon': CupertinoIcons.person_2_fill,
+      'page': Timeline(),
       'index': 1,
     },
     {
@@ -37,9 +39,9 @@ class _TabScreenState extends State<TabScreen> {
       'index': 2,
     },
     {
-      'title': 'Notification',
-      'icon': CupertinoIcons.bell_solid,
-      'page': Activities(),
+      'title': 'Search',
+      'icon': CupertinoIcons.search,
+      'page': Search(),
       'index': 3,
     },
     {
@@ -103,7 +105,6 @@ class _TabScreenState extends State<TabScreen> {
       width: 45.0,
       // ignore: missing_required_param
       child: FabContainer(
-        // page: Publication(),
         icon: Feather.plus,
         mini: true,
       ),
