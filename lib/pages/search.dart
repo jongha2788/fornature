@@ -11,8 +11,6 @@ import 'package:fornature/pages/profile.dart';
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/widgets/indicators.dart';
 
-import 'notification.dart';
-
 class Search extends StatefulWidget {
   @override
   _SearchState createState() => _SearchState();
@@ -82,7 +80,7 @@ class _SearchState extends State<Search> {
       children: [
         Container(
           height: 35.0,
-          width: MediaQuery.of(context).size.width - 100,
+          width: MediaQuery.of(context).size.width - 40,
           decoration: BoxDecoration(
             color: Colors.black26,
             borderRadius: BorderRadius.circular(20.0),
@@ -98,7 +96,6 @@ class _SearchState extends State<Search> {
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(20),
                 ],
-                textCapitalization: TextCapitalization.sentences,
                 onChanged: (query) {
                   search(query);
                 },
@@ -112,34 +109,11 @@ class _SearchState extends State<Search> {
                   contentPadding: EdgeInsets.only(bottom: 12.0, left: 10.0),
                   border: InputBorder.none,
                   counterText: '',
-                  hintText: 'Search...',
+                  hintText: '검색',
                   hintStyle: TextStyle(
                     fontSize: 15.0,
                   ),
                 ),
-              ),
-            ),
-          ),
-        ),
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 3.0, left: 20.0),
-            child: GestureDetector(
-              onTap: () {
-                //Navigator.pop(context);
-                Navigator.of(context)
-                    .push(CupertinoPageRoute(builder: (_) => Activities()));
-              },
-              child: Icon(
-                CupertinoIcons.bell,
-                size: 25.0,
-
-                //'icon',
-                //style: TextStyle(
-                //  fontSize: 13.0,
-                // fontWeight: FontWeight.w900,
-                // color: Theme.of(context).accentColor,
-                //),
               ),
             ),
           ),
@@ -152,8 +126,8 @@ class _SearchState extends State<Search> {
     if (!loading) {
       if (filteredUsers.isEmpty) {
         return Center(
-          child: Text("No User Found",
-              style: TextStyle(fontWeight: FontWeight.bold)),
+          child:
+              Text("검색 결과 없음", style: TextStyle(fontWeight: FontWeight.bold)),
         );
       } else {
         return ListView.builder(
@@ -188,35 +162,14 @@ class _SearchState extends State<Search> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          // builder: (_) => Conversation(
-                          //   userId: doc.id,
-                          //   chatId: 'newChat',
-                          // ),
                           builder: (_) =>
                               Profile(profileId: firebaseAuth.currentUser.uid),
                         ),
                       );
                     },
-                    // child: Icon(CupertinoIcons.chat_bubble_fill,
-                    //     color: Theme.of(context).accentColor),
                     child: Container(
                       height: 30.0,
                       width: 60.0,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        borderRadius: BorderRadius.circular(3.0),
-                        // border:
-                        //     Border.all(color: Theme.of(context).accentColor),
-                      ),
-                      // child: Center(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(5.0),
-                      //     child: Text('Message',
-                      //         style: TextStyle(
-                      //             color: Colors.white,
-                      //             fontWeight: FontWeight.bold)),
-                      //   ),
-                      // ),
                     ),
                   ),
                 ),

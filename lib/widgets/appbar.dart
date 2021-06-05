@@ -3,7 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 
 AppBar header(context) {
   return AppBar(
-    title: Text('ChoHaengGil'),
+    title: Text('초행길'),
     centerTitle: true,
     actions: [
       Padding(

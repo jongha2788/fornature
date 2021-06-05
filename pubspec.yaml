@@ -52,6 +52,10 @@ dependencies:
   image_cropper: ^1.4.0
   shared_preferences: ^2.0.5
   data_connection_checker: ^0.3.4
+  naver_map_plugin: ^0.9.6
+  qrscan: ^0.2.22
+  image_gallery_saver: ^1.6.9
+  permission_handler: ^8.0.0+2
 
 dev_dependencies:
   flutter_test:
@@ -100,18 +104,9 @@ flutter:
     - family: SangSangFlowerRoad
       fonts:
         - asset: assets/fonts/SangSangFlowerRoad.otf
-    - family: NanumSquare_acB
-      fonts:
-        - asset: assets/fonts/NanumSquare_acB.ttf
     - family: NanumSquare_acEB
       fonts:
         - asset: assets/fonts/NanumSquare_acEB.ttf
-    - family: NanumSquare_acL
-      fonts:
-        - asset: assets/fonts/NanumSquare_acL.ttf
-    - family: NanumSquare_acR
-      fonts:
-        - asset: assets/fonts/NanumSquare_acR.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

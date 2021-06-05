@@ -26,23 +26,11 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.white,
         key: viewModel.scaffoldKey,
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 100.0),
           children: [
-            // logo
-            SizedBox(height: 90.0),
-            Container(
-              height: 110.0,
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                'assets/images/logo.png',
-              ),
-            ),
-            // padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
-            // children: [
-            SizedBox(height: 12.0),
             Center(
               child: Text(
-                'Welcome To 초행길!',
+                '초행길에 오신 걸 환영합니다!',
                 style: TextStyle(
                     fontSize: 23.0,
                     fontWeight: FontWeight.w900,
@@ -52,11 +40,10 @@ class _RegisterState extends State<Register> {
             SizedBox(height: 5.0),
             Center(
               child: Text(
-                'Let\'s get started with Zero-Waste Lifestyle!',
+                '제로 웨이스트 라이프 스타일을 시작해볼까요?',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w300,
-                  // color: Theme.of(context).accentColor,
                 ),
               ),
             ),
@@ -67,7 +54,7 @@ class _RegisterState extends State<Register> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Already have an account?  ',
+                  '이미 계정이 있으신가요?  ',
                   style: TextStyle(
                     fontSize: 15.0,
                   ),
@@ -78,11 +65,10 @@ class _RegisterState extends State<Register> {
                         .push(CupertinoPageRoute(builder: (_) => Login()));
                   },
                   child: Text(
-                    'Login',
+                    '로그인',
                     style: TextStyle(
                       fontSize: 15.0,
                       fontWeight: FontWeight.bold,
-                      // color: Theme.of(context).accentColor,
                     ),
                   ),
                 ),
@@ -103,7 +89,7 @@ class _RegisterState extends State<Register> {
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Feather.user,
-            hintText: "Username",
+            hintText: "닉네임",
             textInputAction: TextInputAction.next,
             validateFunction: Validations.validateName,
             onSaved: (String val) {
@@ -112,38 +98,38 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.usernameFN,
             nextFocusNode: viewModel.emailFN,
           ),
-          SizedBox(height: 15.0),
+          SizedBox(height: 10.0),
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Feather.mail,
-            hintText: "Email",
+            hintText: "이메일",
             textInputAction: TextInputAction.next,
             validateFunction: Validations.validateEmail,
             onSaved: (String val) {
               viewModel.setEmail(val);
             },
             focusNode: viewModel.emailFN,
-            nextFocusNode: viewModel.countryFN,
+            nextFocusNode: viewModel.bioFN,
           ),
-          // SizedBox(height: 20.0),
-          // TextFormBuilder(
-          //   enabled: !viewModel.loading,
-          //   prefix: Feather.map_pin,
-          //   hintText: "Country",
-          //   textInputAction: TextInputAction.next,
-          //   validateFunction: Validations.validateName,
-          //   onSaved: (String val) {
-          //     viewModel.setCountry(val);
-          //   },
-          //   focusNode: viewModel.countryFN,
-          //   nextFocusNode: viewModel.passFN,
-          // ),
-          SizedBox(height: 15.0),
+          SizedBox(height: 10.0),
+          TextFormBuilder(
+            enabled: !viewModel.loading,
+            prefix: CupertinoIcons.t_bubble,
+            hintText: "소개",
+            textInputAction: TextInputAction.next,
+            validateFunction: Validations.validateBio,
+            onSaved: (String val) {
+              viewModel.setBio(val);
+            },
+            focusNode: viewModel.bioFN,
+            nextFocusNode: viewModel.passFN,
+          ),
+          SizedBox(height: 10.0),
           PasswordFormBuilder(
             enabled: !viewModel.loading,
             prefix: Feather.lock,
             suffix: Feather.eye,
-            hintText: "Password",
+            hintText: "비밀번호",
             textInputAction: TextInputAction.next,
             validateFunction: Validations.validatePassword,
             obscureText: true,
@@ -153,11 +139,11 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.passFN,
             nextFocusNode: viewModel.cPassFN,
           ),
-          SizedBox(height: 15.0),
+          SizedBox(height: 10.0),
           PasswordFormBuilder(
             enabled: !viewModel.loading,
             prefix: Feather.lock,
-            hintText: "Confirm Password",
+            hintText: "비밀번호 확인",
             textInputAction: TextInputAction.done,
             validateFunction: Validations.validatePassword,
             submitAction: () => viewModel.register(context),
@@ -167,23 +153,17 @@ class _RegisterState extends State<Register> {
             },
             focusNode: viewModel.cPassFN,
           ),
-          SizedBox(height: 10.0),
+          SizedBox(height: 15.0),
           Container(
             height: 35.0,
             width: 180.0,
-            // decoration: BoxDecoration(
-            //   borderRadius: BorderRadius.circular(40.0),
-            //   border: Border.all(color: Colors.black, width: 0.5),
-            // ),
             child: RaisedButton(
-              // highlightElevation: 4.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40.0),
               ),
-              //color: Theme.of(context).accentColor,
               color: Colors.white,
               child: Text(
-                'sign up'.toUpperCase(),
+                '가입하기',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w900,

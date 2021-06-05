@@ -12,17 +12,14 @@ class _LandingState extends State<Landing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // main logo
+      // 메인 로고
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Align(
-            //   alignment: Alignment.center,
             Center(
-              // padding: const EdgeInsets.only(left: 10.0),
               child: Image.asset(
                 'assets/images/logo.png',
                 height: 150.0,
@@ -30,12 +27,11 @@ class _LandingState extends State<Landing> {
                 fit: BoxFit.cover,
               ),
             ),
-            // ),
             SizedBox(height: 10.0),
             Text(
               '초록 행성을 위한 길',
               style: TextStyle(
-                fontSize: 25.0,
+                fontSize: 26.0,
                 fontWeight: FontWeight.w900,
                 fontFamily: 'SangSangFlowerRoad',
               ),
@@ -58,25 +54,13 @@ class _LandingState extends State<Landing> {
                     ),
                   );
                 },
-                // LOGIN buttion
+                // 로그인 버튼
                 child: Container(
                   height: 45.0,
                   width: 150.0,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(10.0),
-                  //   border: Border.all(color: Colors.black, width: 2.0),
-                  // gradient: LinearGradient(
-                  //   begin: Alignment.topRight,
-                  //   end: Alignment.bottomLeft,
-                  //   colors: [
-                  //     Theme.of(context).accentColor,
-                  //     Color(0xff597FDB),
-                  //   ],
-                  // ),
-                  // ),
                   child: Center(
                     child: Text(
-                      'LOGIN',
+                      '로그인',
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w900,
@@ -92,25 +76,13 @@ class _LandingState extends State<Landing> {
                   Navigator.of(context).pushReplacement(
                       CupertinoPageRoute(builder: (_) => Register()));
                 },
-                // SIGN UP button
+                // 회원가입 버튼
                 child: Container(
                   height: 45.0,
                   width: 150.0,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(10.0),
-                  //   border: Border.all(color: Colors.black, width: 2.0),
-                  // gradient: LinearGradient(
-                  //   begin: Alignment.topRight,
-                  //   end: Alignment.bottomLeft,
-                  //   colors: [
-                  //     Theme.of(context).accentColor,
-                  //     Color(0xff597FDB),
-                  //   ],
-                  // ),
-                  // ),
                   child: Center(
                     child: Text(
-                      'SIGN UP',
+                      '회원가입',
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w900,

@@ -26,11 +26,10 @@ class _ProfilePictureState extends State<ProfilePicture> {
         child: Scaffold(
           key: viewModel.scaffoldKey,
           appBar: AppBar(
-            title: Text('Edit Profile Picture'),
+            title: Text('프로필 등록'),
             centerTitle: true,
           ),
           body: ListView(
-            //padding: EdgeInsets.symmetric(horizontal: 30.0),
             padding: EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
             children: [
               InkWell(
@@ -43,7 +42,6 @@ class _ProfilePictureState extends State<ProfilePicture> {
                     borderRadius: BorderRadius.all(
                       Radius.circular(10.0),
                     ),
-                    // border: Border.all(color: Colors.black),
                   ),
                   child: viewModel.imgLink != null
                       ? CustomImage(
@@ -61,7 +59,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                                   size: 60.0,
                                 ),
                                 Text(
-                                  'Upload your profile picture',
+                                  '프로필 사진을 등록하세요',
                                   style: TextStyle(
                                     fontSize: 17.0,
                                     fontWeight: FontWeight.w300,
@@ -80,14 +78,13 @@ class _ProfilePictureState extends State<ProfilePicture> {
               SizedBox(height: 10.0),
               Center(
                 child: RaisedButton(
-                  // color: Theme.of(context).accentColor,
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: Center(
                     child: Text(
-                      'save'.toUpperCase(),
+                      '저장',
                       style: TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.bold,
@@ -112,36 +109,48 @@ class _ProfilePictureState extends State<ProfilePicture> {
       ),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .6,
+          heightFactor: .5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.0),
+              SizedBox(height: 16.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: EdgeInsets.only(left: 20.0, bottom: 8.0),
                 child: Text(
-                  'Select'.toUpperCase(),
+                  '선택하기',
                   style: TextStyle(
+                    fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Divider(),
               ListTile(
-                leading: Icon(Feather.camera),
-                title: Text('Camera'),
+                leading: Icon(
+                  Feather.camera,
+                  size: 25.0,
+                ),
+                title: Transform.translate(
+                  offset: Offset(-16, 0),
+                  child: Text('사진 찍기'),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                   viewModel.pickImage(camera: true);
                 },
               ),
               ListTile(
-                leading: Icon(Feather.image),
-                title: Text('Gallery'),
+                leading: Icon(
+                  Feather.image,
+                  size: 25.0,
+                ),
+                title: Transform.translate(
+                  offset: Offset(-16, 0),
+                  child: Text('사진 보관함'),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                   viewModel.pickImage();
-                  // viewModel.pickProfilePicture();
                 },
               ),
             ],

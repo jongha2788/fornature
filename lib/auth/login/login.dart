@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           children: [
-            // logo
+            // 로고
             SizedBox(height: 130.0),
             Container(
               height: 110.0,
@@ -38,11 +38,11 @@ class _LoginState extends State<Login> {
                 'assets/images/logo.png',
               ),
             ),
-            // welcome messages
+            // 환영 메시지
             SizedBox(height: 12.0),
             Center(
               child: Text(
-                'Welcome Back!',
+                '돌아오신 걸 환영해요!',
                 style: TextStyle(
                     fontSize: 23.0,
                     fontWeight: FontWeight.w900,
@@ -52,11 +52,10 @@ class _LoginState extends State<Login> {
             SizedBox(height: 5.0),
             Center(
               child: Text(
-                'Log into your account and get started!',
+                '로그인하고 시작해볼까요?',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w300,
-                  // color: Theme.of(context).accentColor,
                 ),
               ),
             ),
@@ -67,7 +66,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Don\'t have an account?  ',
+                  '계정이 없으신가요?  ',
                   style: TextStyle(
                     fontSize: 15.0,
                   ),
@@ -78,11 +77,10 @@ class _LoginState extends State<Login> {
                         .push(CupertinoPageRoute(builder: (_) => Register()));
                   },
                   child: Text(
-                    'Sign up',
+                    '가입하기',
                     style: TextStyle(
                       fontSize: 15.0,
                       fontWeight: FontWeight.bold,
-                      // color: Theme.of(context).accentColor,
                     ),
                   ),
                 ),
@@ -103,7 +101,7 @@ class _LoginState extends State<Login> {
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Feather.mail,
-            hintText: "Email",
+            hintText: "이메일",
             textInputAction: TextInputAction.next,
             validateFunction: Validations.validateEmail,
             onSaved: (String val) {
@@ -117,7 +115,7 @@ class _LoginState extends State<Login> {
             enabled: !viewModel.loading,
             prefix: Feather.lock,
             suffix: Feather.eye,
-            hintText: "Password",
+            hintText: "비밀번호",
             textInputAction: TextInputAction.done,
             validateFunction: Validations.validatePassword,
             submitAction: () => viewModel.login(context),
@@ -135,11 +133,10 @@ class _LoginState extends State<Login> {
                 onTap: () => viewModel.forgotPassword(),
                 child: Container(
                   width: 130,
-                  //height: 40,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      'Forgot Password?',
+                      '비밀번호 찾기',
                       style: TextStyle(
                         fontSize: 13.0,
                         fontWeight: FontWeight.bold,
@@ -154,19 +151,13 @@ class _LoginState extends State<Login> {
           Container(
             height: 35.0,
             width: 180.0,
-            // decoration: BoxDecoration(
-            //   borderRadius: BorderRadius.circular(40.0),
-            //   border: Border.all(color: Colors.black, width: 0.5),
-            // ),
             child: RaisedButton(
-              // highlightElevation: 4.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(40.0),
               ),
-              //color: Theme.of(context).accentColor,
               color: Colors.white,
               child: Text(
-                'log in'.toUpperCase(),
+                '로그인',
                 style: TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w900,
