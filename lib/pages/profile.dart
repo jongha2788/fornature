@@ -7,7 +7,6 @@ import 'package:fornature/components/stream_grid_wrapper.dart';
 import 'package:fornature/models/post.dart';
 import 'package:fornature/models/user.dart';
 import 'package:fornature/screens/edit_profile.dart';
-import 'package:fornature/screens/view_image.dart';
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/widgets/post_tiles.dart';
 
