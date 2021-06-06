@@ -24,8 +24,10 @@ class _ProfilePictureState extends State<ProfilePicture> {
         progressIndicator: circularProgress(context),
         inAsyncCall: viewModel.loading,
         child: Scaffold(
+          backgroundColor: Colors.white,
           key: viewModel.scaffoldKey,
           appBar: AppBar(
+            backgroundColor: Colors.white,
             title: Text('프로필 등록'),
             centerTitle: true,
           ),
@@ -87,7 +89,6 @@ class _ProfilePictureState extends State<ProfilePicture> {
                       '저장',
                       style: TextStyle(
                         fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

@@ -65,6 +65,7 @@ class _TabScreenState extends State<TabScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: PageTransitionSwitcher(
         transitionBuilder: (
           Widget child,
@@ -80,6 +81,7 @@ class _TabScreenState extends State<TabScreen> {
         child: pages[_page]['page'],
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

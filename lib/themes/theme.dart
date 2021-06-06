@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'light_color.dart';
+import 'package:fornature/themes/light_color.dart';
 
 class AppTheme {
   const AppTheme();

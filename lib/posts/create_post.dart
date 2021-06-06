@@ -32,8 +32,10 @@ class _CreatePostState extends State<CreatePost> {
         progressIndicator: circularProgress(context),
         inAsyncCall: viewModel.loading,
         child: Scaffold(
+          backgroundColor: Colors.white,
           key: viewModel.scaffoldKey,
           appBar: AppBar(
+            backgroundColor: Colors.white,
             leading: IconButton(
               icon: Icon(Feather.x),
               onPressed: () {
@@ -57,7 +59,6 @@ class _CreatePostState extends State<CreatePost> {
                     '저장',
                     style: TextStyle(
                       fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
