@@ -42,6 +42,7 @@ class _CreatePostState extends State<CreatePost> {
               },
             ),
             title: Text('새 게시물'),
+            title: Text('Make a Post'.toUpperCase()),
             centerTitle: true,
             actions: [
               GestureDetector(

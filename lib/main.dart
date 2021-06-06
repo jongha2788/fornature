@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             // theme: notifier.dark ? Constants.darkTheme : // don't use dark mode
             theme: Constants.lightTheme,
+            theme: notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (BuildContext context, AsyncSnapshot<User> snapshot) {

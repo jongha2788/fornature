@@ -39,6 +39,7 @@ class StreamGridWrapper extends StatelessWidget {
                     padding: const EdgeInsets.all(150.0),
                     child: Text(
                       '게시물 없음',
+                      'No Posts Yet',
                       style: TextStyle(
                           fontWeight: FontWeight.w600, fontSize: 20.0),
                     ),
