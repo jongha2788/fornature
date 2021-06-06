@@ -14,19 +14,20 @@ class Timeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Text(
           '초행길',
-          style: TextStyle(fontWeight: FontWeight.w900),
         ),
         centerTitle: true,
         actions: [
           // notifications
           Container(
             child: Padding(
-              padding: const EdgeInsets.only(top: 2.0, right: 15.0),
+              padding: const EdgeInsets.only(top: 4.0, right: 20.0),
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context)
@@ -34,7 +35,7 @@ class Timeline extends StatelessWidget {
                 },
                 child: Icon(
                   CupertinoIcons.bell,
-                  size: 25.0,
+                  size: 22.0,
                 ),
               ),
             ),

@@ -47,7 +47,7 @@ class UserPost extends StatelessWidget {
                   ClipRRect(
                     child: CustomImage(
                       imageUrl: post?.mediaUrl ?? '',
-                      height: 400.0,
+                      height: MediaQuery.of(context).size.width - 10.0,
                       fit: BoxFit.cover,
                       width: double.infinity,
                     ),
@@ -58,8 +58,8 @@ class UserPost extends StatelessWidget {
                       Row(
                         children: [
                           Container(
-                            width: 40.0,
-                            height: 40.0,
+                            width: 35.0,
+                            height: 35.0,
                             child: buildLikeButton(),
                           ),
                           InkWell(
@@ -71,10 +71,11 @@ class UserPost extends StatelessWidget {
                               );
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 2.0),
+                              padding:
+                                  const EdgeInsets.only(left: 2.0, top: 3.0),
                               child: Icon(
                                 CupertinoIcons.chat_bubble,
-                                size: 21.0,
+                                size: 20.0,
                               ),
                             ),
                           ),
@@ -123,7 +124,7 @@ class UserPost extends StatelessWidget {
                           child: Text(
                             '${post.description}',
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                             ),
                             maxLines: 2,
                           ),
@@ -135,7 +136,7 @@ class UserPost extends StatelessWidget {
                         child: Text(
                             timeago.format(post.timestamp.toDate(),
                                 locale: 'ko'),
-                            style: TextStyle(fontSize: 11.0)),
+                            style: TextStyle(fontSize: 9.0)),
                       ),
                     ],
                   )
@@ -175,10 +176,12 @@ class UserPost extends StatelessWidget {
             icon: docs.isEmpty
                 ? Icon(
                     CupertinoIcons.heart,
+                    size: 22.0,
                   )
                 : Icon(
                     CupertinoIcons.heart_fill,
                     color: Colors.red,
+                    size: 22.0,
                   ),
           );
         }
@@ -232,8 +235,7 @@ class UserPost extends StatelessWidget {
       child: Text(
         '좋아요 $count개',
         style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 14.0,
+          fontSize: 12.0,
         ),
       ),
     );
@@ -245,8 +247,7 @@ class UserPost extends StatelessWidget {
       child: Text(
         '댓글 $count개',
         style: TextStyle(
-          fontSize: 14.0,
-          fontWeight: FontWeight.bold,
+          fontSize: 12.0,
         ),
       ),
     );
@@ -265,7 +266,7 @@ class UserPost extends StatelessWidget {
             child: Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: 50.0,
+                height: 40.0,
                 decoration: BoxDecoration(
                   color: Colors.white60,
                   borderRadius: BorderRadius.only(
@@ -282,13 +283,13 @@ class UserPost extends StatelessWidget {
                       children: [
                         user.photoUrl.isNotEmpty
                             ? CircleAvatar(
-                                radius: 16.0,
+                                radius: 14.0,
                                 backgroundColor: Color(0xff4D4D4D),
                                 backgroundImage:
                                     CachedNetworkImageProvider(user.photoUrl),
                               )
                             : CircleAvatar(
-                                radius: 16.0,
+                                radius: 14.0,
                                 backgroundColor: Color(0xff4D4D4D),
                               ),
                         SizedBox(width: 10.0),
@@ -299,16 +300,16 @@ class UserPost extends StatelessWidget {
                             Text(
                               '${post.username}',
                               style: TextStyle(
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                                 fontWeight: FontWeight.bold,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
+                            SizedBox(height: 2.0),
                             Text(
                               '${post.location == null ? '' : post.location}',
                               style: TextStyle(
-                                fontSize: 11.0,
-                                color: Color(0xff4D4D4D),
+                                fontSize: 9.0,
                               ),
                             ),
                           ],

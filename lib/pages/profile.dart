@@ -66,6 +66,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         centerTitle: true,
         title: Text('프로필'),
         actions: [
@@ -83,7 +84,6 @@ class _ProfileState extends State<Profile> {
                         '로그아웃',
                         style: TextStyle(
                           fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -95,6 +95,7 @@ class _ProfileState extends State<Profile> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
             pinned: true,
             floating: false,
@@ -166,13 +167,12 @@ class _ProfileState extends State<Profile> {
                             ),
                           ],
                         ),
-
                         /* POSTS, FOLLOWERS, FOLLOWING */
                         SizedBox(height: 15.0),
                         Center(
                           child: Container(
                             height: 50.0,
-                            width: 380.0,
+                            width: MediaQuery.of(context).size.width - 15.0,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -266,7 +266,7 @@ class _ProfileState extends State<Profile> {
                                   width: 50.0,
                                   child: StreamBuilder(
                                     stream: visithistoryRef
-                                        .doc(currentUserId())
+                                        .doc(widget.profileId)
                                         .collection('visithistory')
                                         .snapshots(),
                                     builder: (context,
@@ -274,9 +274,8 @@ class _ProfileState extends State<Profile> {
                                       if (snapshot.hasData) {
                                         QuerySnapshot snap = snapshot.data;
                                         List<DocumentSnapshot> docs = snap.docs;
-                                        //print(docs[0].get('Count'));
                                         return buildCount(
-                                            "방문기록", docs[0]?.get('Count') ?? 0);
+                                            "방문기록", docs?.length ?? 0);
                                       } else {
                                         return buildCount("방문기록", 0);
                                       }
@@ -287,6 +286,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 3.0),
                         buildProfileButton(user),
                       ],
                     );
@@ -331,18 +331,18 @@ class _ProfileState extends State<Profile> {
         Text(
           count.toString(),
           style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'NanumSquare_acEB'),
+            fontSize: 20.0,
+            fontWeight: FontWeight.w900,
+          ),
         ),
         SizedBox(height: 4.0),
         /* category text style */
         Text(
           label,
           style: TextStyle(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w400,
-              fontFamily: 'NanumSquare_acEB'),
+            fontSize: 12.0,
+            fontWeight: FontWeight.w400,
+          ),
         )
       ],
     );
@@ -385,7 +385,7 @@ class _ProfileState extends State<Profile> {
         onTap: function,
         child: Container(
           height: 30.0,
-          width: 380.0,
+          width: MediaQuery.of(context).size.width - 15.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(3.0),
             border: Border.all(width: 0.3, color: Colors.black),
@@ -393,8 +393,7 @@ class _ProfileState extends State<Profile> {
           child: Center(
             child: Text(
               text,
-              style:
-                  TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+              style: TextStyle(color: Colors.black),
             ),
           ),
         ),

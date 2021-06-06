@@ -68,7 +68,9 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: buildSearch(),
       ),
       body: buildUsers(),
@@ -80,7 +82,7 @@ class _SearchState extends State<Search> {
       children: [
         Container(
           height: 35.0,
-          width: MediaQuery.of(context).size.width - 40,
+          width: MediaQuery.of(context).size.width - 80,
           decoration: BoxDecoration(
             color: Colors.black26,
             borderRadius: BorderRadius.circular(20.0),

@@ -27,10 +27,11 @@ class _LoginState extends State<Login> {
         backgroundColor: Colors.white,
         key: viewModel.scaffoldKey,
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 25,
+              vertical: MediaQuery.of(context).size.height / 4),
           children: [
             // 로고
-            SizedBox(height: 130.0),
             Container(
               height: 110.0,
               width: MediaQuery.of(context).size.width,
@@ -44,9 +45,9 @@ class _LoginState extends State<Login> {
               child: Text(
                 '돌아오신 걸 환영해요!',
                 style: TextStyle(
-                    fontSize: 23.0,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'NanumSquare_acEB'),
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
             SizedBox(height: 5.0),
@@ -55,7 +56,6 @@ class _LoginState extends State<Login> {
                 '로그인하고 시작해볼까요?',
                 style: TextStyle(
                   fontSize: 15.0,
-                  fontWeight: FontWeight.w300,
                 ),
               ),
             ),

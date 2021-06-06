@@ -197,8 +197,10 @@ class _BaseMapPageState extends State<BaseMapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: buildSearch(),
       ),
       body: Stack(

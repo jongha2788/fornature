@@ -88,25 +88,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Lato-Regular
-      fonts:
-        - asset: assets/fonts/Lato-Regular.ttf
-    #       - asset: fonts/Schyler-Italic.ttf
-    #         style: italic
     - family: Roboto-Regular
       fonts:
         - asset: assets/fonts/Roboto-Regular.ttf
-    #       - asset: fonts/TrajanPro_Bold.ttf
-    #         weight: 700
-    - family: Ubuntu-Regular
-      fonts:
-        - asset: assets/fonts/Ubuntu-Regular.ttf
     - family: SangSangFlowerRoad
       fonts:
         - asset: assets/fonts/SangSangFlowerRoad.otf
-    - family: NanumSquare_acEB
-      fonts:
-        - asset: assets/fonts/NanumSquare_acEB.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
