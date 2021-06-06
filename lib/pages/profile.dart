@@ -25,6 +25,9 @@ class _ProfileState extends State<Profile> {
   int postCount = 0;
   int followersCount = 0;
   int followingCount = 0;
+  int visitCount = 0;
+  bool isFollowing = false;
+  bool isVisited = false;
   //int visithistory = 0;
   // bool isToggle = true; // list or grid view of posts
   bool isFollowing = false;
@@ -41,6 +44,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
+    checkIfVisited();
     // checkIfvisithistory();
   }
 
@@ -55,16 +59,26 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  checkIfVisited() async {
+    DocumentSnapshot doc = await visithistoryRef.doc(widget.profileId).get();
+    setState(() {
+      isVisited = doc.exists;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
+        title: Text('프로필'),
         title: Text('내 프로필'),
         actions: [
           widget.profileId == firebaseAuth.currentUser.uid
               ? Center(
                   child: Padding(
+                    padding: const EdgeInsets.all(17.0),
                     padding: const EdgeInsets.only(bottom: 3.0, right: 20.0),
                     child: GestureDetector(
                       onTap: () {
@@ -73,8 +87,11 @@ class _ProfileState extends State<Profile> {
                             CupertinoPageRoute(builder: (_) => Register()));
                       },
                       child: Text(
-                        'Log Out',
+                        '로그아웃',
                         style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                             fontWeight: FontWeight.w600, fontSize: 14.0),
                       ),
                     ),
@@ -112,22 +129,46 @@ class _ProfileState extends State<Profile> {
                                 radius: 50.0,
                               ),
                             ),
+                            SizedBox(width: 12.0),
                             SizedBox(width: 20.0),
                             /* username */
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 32.0),
+                                SizedBox(height: 15.0),
                                 Row(
                                   children: [
-                                    Visibility(
-                                      visible: false,
-                                      child: SizedBox(width: 10.0),
-                                    ),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Text(
+                                          user?.username,
+                                          style: TextStyle(
+                                              fontSize: 22.0,
+                                              fontWeight: FontWeight.w900),
+                                          maxLines: null,
+                                        ),
+                                        SizedBox(height: 5.0),
+                                        /* bio */
+                                        Text(
+                                          user?.bio,
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          maxLines: null,
+                                        ),
+                                        SizedBox(height: 5.0),
+                                        /* email account */
+                                        Text(
+                                          user?.email,
+                                          style: TextStyle(
+                                            fontSize: 13.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                         Container(
                                           width: 130.0,
                                           child: Text(
@@ -224,10 +265,29 @@ class _ProfileState extends State<Profile> {
                         Center(
                           child: Container(
                             height: 50.0,
+                            width: 380.0,
                             width: 350.0,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
+                                Container(
+                                  width: 50.0,
+                                  child: StreamBuilder(
+                                    stream: postRef
+                                        .where('ownerId',
+                                            isEqualTo: widget.profileId)
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasData) {
+                                        QuerySnapshot snap = snapshot.data;
+                                        List<DocumentSnapshot> docs = snap.docs;
+                                        return buildCount(
+                                            "게시물", docs?.length ?? 0);
+                                      } else {
+                                        return buildCount("게시물", 0);
+                                      }
+                                    },
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
                                   child: Container(
@@ -333,6 +393,7 @@ class _ProfileState extends State<Profile> {
                                         List<DocumentSnapshot> docs = snap.docs;
                                         //print(docs[0].get('Count'));
                                         return buildCount(
+                                            "방문기록", docs[0]?.get('Count') ?? 0);
                                             "방문기록",docs[0]?.get('Count') ?? 0);
                                       } else {
                                         return buildCount("방문기록", 0);
@@ -365,6 +426,12 @@ class _ProfileState extends State<Profile> {
                       child: Row(
                         children: [
                           Text(
+                            '모든 게시물',
+                            style: TextStyle(fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
+                    ),
                             '모든 포스트',
                             style: TextStyle(fontWeight: FontWeight.w900),
                           ),
@@ -419,7 +486,7 @@ class _ProfileState extends State<Profile> {
           style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w900,
-              fontFamily: 'Ubuntu-Regular'),
+              fontFamily: 'NanumSquare_acEB'),
         ),
         SizedBox(height: 4.0),
         /* category text style */
@@ -428,7 +495,7 @@ class _ProfileState extends State<Profile> {
           style: TextStyle(
               fontSize: 12.0,
               fontWeight: FontWeight.w400,
-              fontFamily: 'Ubuntu-Regular'),
+              fontFamily: 'NanumSquare_acEB'),
         )
       ],
     );
@@ -439,6 +506,7 @@ class _ProfileState extends State<Profile> {
     bool isMe = widget.profileId == firebaseAuth.currentUser.uid;
     if (isMe) {
       return buildButton(
+          text: "프로필 편집",
           text: "프로필 수정",
           function: () {
             Navigator.of(context).push(
@@ -452,13 +520,13 @@ class _ProfileState extends State<Profile> {
       //if you are already following the user then "unfollow"
     } else if (isFollowing) {
       return buildButton(
-        text: "Unfollow",
+        text: "팔로우 취소",
         function: handleUnfollow,
       );
       //if you are not following the user then "follow"
     } else if (!isFollowing) {
       return buildButton(
-        text: "Follow",
+        text: "팔로우",
         function: handleFollow,
       );
     }
@@ -663,9 +731,8 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           );
-        }
-        return Container();
-      },
+        },
+      ),
     );
   }
 }

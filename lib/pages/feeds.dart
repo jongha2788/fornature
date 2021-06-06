@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fornature/components/stream_builder_wrapper.dart';
 import 'package:fornature/models/post.dart';
+import 'package:fornature/pages/notification.dart';
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/widgets/userpost.dart';
 
@@ -19,6 +20,28 @@ class Timeline extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
+          '초행길',
+          style: TextStyle(fontWeight: FontWeight.w900),
+        ),
+        centerTitle: true,
+        actions: [
+          // notifications
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 2.0, right: 15.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (_) => Activities()));
+                },
+                child: Icon(
+                  CupertinoIcons.bell,
+                  size: 25.0,
+                ),
+              ),
+            ),
+          ),
+        ],
           '초행길 커뮤니티',
           style: TextStyle(fontWeight: FontWeight.w900),
         ),
@@ -80,7 +103,6 @@ class Timeline extends StatelessWidget {
               PostModel posts = PostModel.fromJson(snapshot.data());
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
-                //  child: Posts(post: posts),
                 child: UserPost(post: posts),
               );
             },

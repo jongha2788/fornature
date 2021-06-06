@@ -3,8 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
   //App related strings
+  static String appName = "초행길";
   static String appName = "ChoHaengGil";
-
+  
   //Colors for theme
   // static Color lightPrimary = Color(0xfff3f4f9);
   static Color lightPrimary = Color(0xfff8fff7);

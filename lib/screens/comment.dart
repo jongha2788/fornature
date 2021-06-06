@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fornature/components/stream_comments_wrapper.dart';
 import 'package:fornature/models/comments.dart';
 import 'package:fornature/models/post.dart';
@@ -36,11 +37,11 @@ class _CommentsState extends State<Comments> {
             Navigator.pop(context);
           },
           child: Icon(
-            CupertinoIcons.xmark_circle_fill,
+            Icons.keyboard_backspace,
           ),
         ),
         centerTitle: true,
-        title: Text('Comments'),
+        title: Text('댓글'),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -54,9 +55,7 @@ class _CommentsState extends State<Comments> {
                     child: buildFullPost(),
                   ),
                   Divider(thickness: 1.5),
-                  Flexible(
-                    child: buildComments(),
-                  )
+                  buildComments(),
                 ],
               ),
             ),
@@ -69,51 +68,63 @@ class _CommentsState extends State<Comments> {
                 constraints: BoxConstraints(
                   maxHeight: 190.0,
                 ),
-                child: Column(
+                // write comment section
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Flexible(
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(0),
-                        title: TextField(
-                          textCapitalization: TextCapitalization.sentences,
-                          controller: commentsTEC,
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            color: Theme.of(context).textTheme.headline6.color,
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(10.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                            hintText: "Write your comment...",
-                            hintStyle: TextStyle(
-                              fontSize: 15.0,
-                              color:
-                                  Theme.of(context).textTheme.headline6.color,
-                            ),
-                          ),
-                          maxLines: null,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 4.0, bottom: 4.0, left: 10.0),
+                      child: Container(
+                        height: 35.0,
+                        width: MediaQuery.of(context).size.width - 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
-                        trailing: GestureDetector(
-                          onTap: addComments,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 10.0),
-                            child: Icon(
-                              Icons.send,
-                              color: Theme.of(context).accentColor,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Center(
+                            child: TextField(
+                              textInputAction: TextInputAction.done,
+                              controller: commentsTEC,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(30),
+                              ],
+                              onEditingComplete: addComments,
+                              style: TextStyle(
+                                fontSize: 15.0,
+                              ),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(left: 15.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderSide: BorderSide(
+                                    width: 0.5,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderSide: BorderSide(
+                                    width: 0.5,
+                                  ),
+                                ),
+                                hintText: "댓글 달기...",
+                                hintStyle: TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              maxLines: null,
                             ),
                           ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: addComments,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          CupertinoIcons.check_mark,
                         ),
                       ),
                     ),
@@ -130,93 +141,36 @@ class _CommentsState extends State<Comments> {
   buildFullPost() {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment:MainAxisAlignment.start,
-      crossAxisAlignment:CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // photo
         Container(
-          height: 250.0,
+          height: 400.0,
           width: MediaQuery.of(context).size.width - 20.0,
           child: cachedNetworkImage(widget.post.mediaUrl),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-           
-            children: [
-              Column(
-                mainAxisAlignment:MainAxisAlignment.start,
-      crossAxisAlignment:CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.post.description,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  SizedBox(height: 4.0),
-                  Row(
-                    children: [
-                      Text(
-                        timeago.format(widget.post.timestamp.toDate()),
-                        style: TextStyle(),
-                      ),
-                      SizedBox(width: 3.0),
-                      StreamBuilder(
-                        stream: likesRef
-                            .where('postId', isEqualTo: widget.post.postId)
-                            .snapshots(),
-                        builder:
-                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasData) {
-                            QuerySnapshot snap = snapshot.data;
-                            List<DocumentSnapshot> docs = snap.docs;
-                            return buildLikesCount(context, docs?.length ?? 0);
-                          } else {
-                            return buildLikesCount(context, 0);
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+        // description
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildLikeButton(),
+            Text(
+              widget.post.description,
+              style: TextStyle(
+                fontSize: 18.0,
               ),
-              Spacer(),
-              buildLikeButton(),
-            ],
-          ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(top: 2.0, right: 10.0),
+              child: Text(
+                timeago.format(widget.post.timestamp.toDate(), locale: 'ko'),
+              ),
+            ),
+          ],
         ),
-        // ListTile(
-        //     contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-        //     title: Text(
-        //       widget.post.description,
-        //       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12.0),
-        //     ),
-        //     subtitle: Padding(
-        //       padding: const EdgeInsets.only(top: 8.0),
-        //       child: Row(
-        //         children: [
-        //           Text(
-        //             timeago.format(widget.post.timestamp.toDate()),style:TextStyle(),
-        //           ),
-        //           SizedBox(width: 3.0),
-        //           StreamBuilder(
-        //             stream: likesRef
-        //                 .where('postId', isEqualTo: widget.post.postId)
-        //                 .snapshots(),
-        //             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        //               if (snapshot.hasData) {
-        //                 QuerySnapshot snap = snapshot.data;
-        //                 List<DocumentSnapshot> docs = snap.docs;
-        //                 return buildLikesCount(context, docs?.length ?? 0);
-        //               } else {
-        //                 return buildLikesCount(context, 0);
-        //               }
-        //             },
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //     trailing: buildLikeButton()),
       ],
     );
   }
@@ -251,7 +205,6 @@ class _CommentsState extends State<Comments> {
   buildComments() {
     return CommentsStreamWrapper(
       shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       stream: commentRef
           .doc(widget.post.postId)
           .collection('comments')
@@ -260,34 +213,33 @@ class _CommentsState extends State<Comments> {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (_, DocumentSnapshot snapshot) {
         CommentModel comments = CommentModel.fromJson(snapshot.data());
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
-              leading: CircleAvatar(
-                radius: 20.0,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 15.0,
                 backgroundImage: NetworkImage(comments.userDp),
               ),
-              title: Text(
+              SizedBox(width: 8.0),
+              Text(
                 comments.username,
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
-              subtitle: Text(
-                timeago.format(comments.timestamp.toDate()),
+              SizedBox(width: 8.0),
+              Text(
+                comments.comment,
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+              Spacer(),
+              Text(
+                timeago.format(comments.timestamp.toDate(), locale: 'ko'),
                 style: TextStyle(fontSize: 12.0),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                comments.comment,
-                style: TextStyle(fontWeight: FontWeight.w400),
-              ),
-            ),
-            Divider()
-          ],
+            ],
+          ),
         );
       },
     );
