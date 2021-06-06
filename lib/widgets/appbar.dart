@@ -6,6 +6,7 @@ AppBar header(context) {
   return AppBar(
     backgroundColor: Colors.white,
     title: Text('초행길'),
+    title: Text('ChoHaengGil'),
     centerTitle: true,
     actions: [
       Padding(

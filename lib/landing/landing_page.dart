@@ -34,6 +34,7 @@ class _LandingState extends State<Landing> {
               style: TextStyle(
                 fontSize: 26.0,
                 fontFamily: 'SangSangFlowerRoad',
+                fontFamily: 'Lato-Regular',
               ),
             )
           ],

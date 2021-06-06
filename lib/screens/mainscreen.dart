@@ -7,8 +7,10 @@ import 'package:fornature/pages/base_map.dart';
 import 'package:fornature/pages/profile.dart';
 import 'package:fornature/pages/search.dart';
 import 'package:fornature/pages/feeds.dart';
+import 'package:fornature/pages/mapping.dart';
 
 import 'package:fornature/utils/firebase.dart';
+import 'package:fornature/pages/base_map.dart';
 
 class TabScreen extends StatefulWidget {
   @override
@@ -22,12 +24,15 @@ class _TabScreenState extends State<TabScreen> {
     {
       // mapping
       'title': 'Map',
+      // mapping 
+      'title': 'Home',
       'icon': CupertinoIcons.map,
       'page': BaseMapPage(),
       'index': 0,
     },
     {
       'title': 'Community',
+        'title': 'Community',
       'icon': CupertinoIcons.person_2_fill,
       'page': Timeline(),
       'index': 1,
@@ -39,10 +44,15 @@ class _TabScreenState extends State<TabScreen> {
       'index': 2,
     },
     {
+//commuinity
       'title': 'Search',
       'icon': CupertinoIcons.search,
       'page': Search(),
       'index': 3,
+    //  'title': 'Notification',
+    //  'icon': CupertinoIcons.bell_solid,
+    //  'page': Activities(),
+    //  'index': 3,
     },
     {
       'title': 'Profile',

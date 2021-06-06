@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:fornature/pages/kakao.dart';
 import 'package:fornature/pages/qrcode.dart';
 import 'package:fornature/posts/create_post.dart';
+import '../pages/QRpage.dart';
+import '../pages/kakao.dart';
+import '../posts/create_post.dart';
+//import 'file:///C:/Users/success/fornature/lib/posts/create_post.dart';
 
 class FabContainer extends StatelessWidget {
   final Widget page;
@@ -79,6 +83,16 @@ class FabContainer extends StatelessWidget {
                   //  Navigator.pop(context);
                   Navigator.of(context)
                       .push(CupertinoPageRoute(builder: (_) => CreatePost()));
+                  CupertinoIcons.money_dollar_circle,
+                  size: 25.0,
+                ),
+                title: Text('KAKAO API'),
+                onTap: () {
+                  // kakao 넣는 페이지!!!!
+                  ///Feature coming soon
+                //  Navigator.pop(context);
+              Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (_) => KakaoAPI()));
                 },
               ),
               ListTile(
@@ -91,6 +105,28 @@ class FabContainer extends StatelessWidget {
                   child: Text('카카오페이로 결제'),
                 ),
                 onTap: () {
+                  CupertinoIcons.qrcode_viewfinder,
+                  size: 25.0,
+                ),
+                title: Text('QR scanner'),
+                onTap: () {
+                  //QR넣는 페이지!!!!!
+                 // Navigator.pop(context);
+
+                Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (_) => QrcodeScanner()));
+                },
+              ),
+             /* ListTile(
+                leading: Icon(
+                  CupertinoIcons.camera_on_rectangle,
+                  size: 25.0,
+                ),
+                title: Text('Make a post'),
+                onTap: () {
+                 // QR넣는 페이지!!!!!
+                  Navigator.pop(context);
+
                   Navigator.of(context)
                       .push(CupertinoPageRoute(builder: (_) => KakaoAPI()));
                 },
@@ -108,7 +144,7 @@ class FabContainer extends StatelessWidget {
                   Navigator.of(context).push(
                       CupertinoPageRoute(builder: (_) => QrcodeScanner()));
                 },
-              ),
+              ),*/
             ],
           ),
         );
