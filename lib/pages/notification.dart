@@ -26,12 +26,6 @@ class _ActivitiesState extends State<Activities> {
             Navigator.pop(context);
           },
         ),
-              icon: Icon(Feather.x),
-              onPressed: () {
-              
-                Navigator.pop(context);
-              },
-            ),
         automaticallyImplyLeading: false,
         title: Text('알림'),
         centerTitle: true,
