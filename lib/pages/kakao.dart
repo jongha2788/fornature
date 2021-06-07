@@ -19,7 +19,6 @@ class _KakaoAPIState extends State<KakaoAPI> {
           ),
           automaticallyImplyLeading: false,
           title: Text('결제'),
-          title: Text('Kakao API'),
           centerTitle: true,
         ),
         body: Center(
