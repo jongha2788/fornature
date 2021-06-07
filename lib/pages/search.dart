@@ -82,7 +82,7 @@ class _SearchState extends State<Search> {
       children: [
         Container(
           height: 35.0,
-          width: MediaQuery.of(context).size.width - 100,
+          width: MediaQuery.of(context).size.width - 40,
           decoration: BoxDecoration(
             color: Colors.black26,
             borderRadius: BorderRadius.circular(20.0),
@@ -98,7 +98,6 @@ class _SearchState extends State<Search> {
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(20),
                 ],
-                textCapitalization: TextCapitalization.sentences,
                 onChanged: (query) {
                   search(query);
                 },
@@ -109,10 +108,10 @@ class _SearchState extends State<Search> {
                     },
                     child: Icon(Feather.x, size: 12.0, color: Colors.black),
                   ),
-                  contentPadding: EdgeInsets.only(bottom: 10.0, left: 10.0),
+                  contentPadding: EdgeInsets.only(bottom: 12.0, left: 10.0),
                   border: InputBorder.none,
                   counterText: '',
-                  hintText: 'Search...',
+                  hintText: '검색',
                   hintStyle: TextStyle(
                     fontSize: 15.0,
                   ),
@@ -154,8 +153,8 @@ class _SearchState extends State<Search> {
     if (!loading) {
       if (filteredUsers.isEmpty) {
         return Center(
-          child: Text("No User Found",
-              style: TextStyle(fontWeight: FontWeight.bold)),
+          child:
+              Text("검색 결과 없음", style: TextStyle(fontWeight: FontWeight.bold)),
         );
       } else {
         return ListView.builder(
@@ -199,26 +198,9 @@ class _SearchState extends State<Search> {
                         ),
                       );
                     },
-                    // child: Icon(CupertinoIcons.chat_bubble_fill,
-                    //     color: Theme.of(context).accentColor),
                     child: Container(
                       height: 30.0,
                       width: 60.0,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        borderRadius: BorderRadius.circular(3.0),
-                        // border:
-                        //     Border.all(color: Theme.of(context).accentColor),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text('Message',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
                     ),
                   ),
                 ),

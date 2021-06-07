@@ -1,3 +1,5 @@
+/* 피드에서 이미지 누를 시 이미지 보여주는 기능 */
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,7 +55,8 @@ class _ViewImageState extends State<ViewImage> {
                       children: [
                         Icon(Feather.clock, size: 13.0),
                         SizedBox(width: 3.0),
-                        Text(timeago.format(widget.post.timestamp.toDate())),
+                        Text(timeago.format(widget.post.timestamp.toDate(),
+                            locale: 'ko')),
                       ],
                     ),
                   ],

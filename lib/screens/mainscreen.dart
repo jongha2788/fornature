@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fornature/components/fab_container.dart';
-import 'package:fornature/pages/notification.dart';
+import 'package:fornature/pages/base_map.dart';
 import 'package:fornature/pages/profile.dart';
 import 'package:fornature/pages/search.dart';
 import 'package:fornature/pages/feeds.dart';
@@ -22,6 +22,8 @@ class _TabScreenState extends State<TabScreen> {
 
   List pages = [
     {
+      // mapping
+      'title': 'Map',
       // mapping 
       'title': 'Home',
       'icon': CupertinoIcons.map,
@@ -29,6 +31,7 @@ class _TabScreenState extends State<TabScreen> {
       'index': 0,
     },
     {
+      'title': 'Community',
         'title': 'Community',
       'icon': CupertinoIcons.person_2_fill,
       'page': Timeline(),
@@ -112,7 +115,6 @@ class _TabScreenState extends State<TabScreen> {
       width: 45.0,
       // ignore: missing_required_param
       child: FabContainer(
-        // page: Publication(),
         icon: Feather.plus,
         mini: true,
       ),

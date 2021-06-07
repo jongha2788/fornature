@@ -12,6 +12,7 @@ import 'package:fornature/themes/theme.dart';
 import 'package:fornature/widgets/title_text.dart';
 import 'package:fornature/widgets/extentions.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:fornature/utils/firebase.dart';
 import 'package:fornature/pages/search_shop.dart';
 
@@ -972,6 +973,8 @@ class _BaseMapPageState extends State<BaseMapPage> {
                 phone = doc.data()['number'];
                 time = doc.data()['time'];
                 tmpcat = List.from(doc.data()['category']);
+                lat = doc.data()['location'].latitude;
+                long = doc.data()['location'].longitude;
                 //_markers[pos].captionText = '선택됨';
                 for (int i = 0; i < tmpcatbool.length; i++) {
                   tmpcatbool[i] = false;
@@ -1011,6 +1014,16 @@ class _BaseMapPageState extends State<BaseMapPage> {
       //_markers[pos].captionText = '선택됨';
     });
     */
+  }
+  
+  launchInBrowser(LatLng position, String placename) async{
+    String url = 'https://map.kakao.com/link/to/' + '$placename' + ',' + '${position.latitude}' + ',' + '${position.longitude}';
+
+    if(await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw '열기 실패';
+    }
   }
 
   Widget _detailWidget() {
@@ -1057,15 +1070,19 @@ class _BaseMapPageState extends State<BaseMapPage> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              TitleText(
-                                text: "\$ ",
-                                fontSize: 18,
-                                color: LightColor.red,
-                              ),
-                              TitleText(
-                                text: "240",
-                                fontSize: 25,
-                              ),
+                              // TitleText(
+                              //   text: "\$ ",
+                              //   fontSize: 18,
+                              //   color: LightColor.red,
+                              // ),
+                              // TitleText(
+                              //   text: "240",
+                              //   fontSize: 25,
+                              // ),
+                              RaisedButton(
+                                onPressed: () => launchInBrowser(LatLng(lat, long), placename),
+                                child: Text('길 찾기'),
+                                )
                             ],
                           ),
                           Row(

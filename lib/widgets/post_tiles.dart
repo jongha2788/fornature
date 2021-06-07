@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fornature/models/post.dart';
-import 'package:fornature/screens/view_image.dart';
+import 'package:fornature/screens/comment.dart';
 import 'package:fornature/widgets/cached_image.dart';
 
 class PostTile extends StatefulWidget {
@@ -19,7 +19,7 @@ class _PostTileState extends State<PostTile> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(CupertinoPageRoute(
-          builder: (_) => ViewImage(post: widget.post),
+          builder: (_) => Comments(post: widget.post),
         ));
       },
       child: Container(
