@@ -4,8 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Constants {
   //App related strings
   static String appName = "초행길";
-  static String appName = "ChoHaengGil";
-  
+
   //Colors for theme
   // static Color lightPrimary = Color(0xfff3f4f9);
   static Color lightPrimary = Color(0xfff8fff7);
@@ -20,7 +19,7 @@ class Constants {
   static Color darkBG = Color(0xff2B2B2B);
 
   static ThemeData lightTheme = ThemeData(
-    fontFamily: 'Lato-Regular',
+    fontFamily: 'Roboto-Regular',
     backgroundColor: lightBG,
     primaryColor: lightPrimary,
     accentColor: lightAccent,
@@ -37,14 +36,14 @@ class Constants {
           color: Colors.black,
           fontSize: 18,
           fontWeight: FontWeight.w900,
-          fontFamily: 'Lato-Regular',
+          fontFamily: 'Roboto-Regular',
         ),
       ),
     ),
   );
 
   static ThemeData darkTheme = ThemeData(
-    fontFamily: 'Lato-Regular',
+    fontFamily: 'Roboto-Regular',
     brightness: Brightness.dark,
     backgroundColor: darkBG,
     primaryColor: darkPrimary,
@@ -62,7 +61,7 @@ class Constants {
           color: lightBG,
           fontSize: 20,
           fontWeight: FontWeight.w900,
-          fontFamily: 'Lato-Regular',
+          fontFamily: 'Roboto-Regular',
         ),
       ),
     ),
