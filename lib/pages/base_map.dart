@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:fornature/themes/light_color.dart';
@@ -12,6 +13,16 @@ import 'package:fornature/widgets/title_text.dart';
 import 'package:fornature/widgets/extentions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:fornature/utils/firebase.dart';
+import 'package:fornature/pages/search_shop.dart';
+
+List<DocumentSnapshot> shops = [];
+List<DocumentSnapshot> filteredshops = [];
+
+String placename;
+double lat;
+double long;
+bool searched = false;
 
 class BaseMapPage extends StatefulWidget {
   @override
@@ -26,45 +37,94 @@ class _BaseMapPageState extends State<BaseMapPage> {
   var cat = 0;
   List<int> _categor = [0, 1, 2, 3, 4];
   List<String> _catstr = ["", "소분", "공방", "리필", "카페"];
-  String placename;
-  //variables for selected shop
-  List<String> tmpcat;
-  List<bool> tmpcatbool = [false, false, false, false];
   String phone;
   String time;
-  double _value = 2000.0;
+  List<String> tmpcat;
+  List<bool> tmpcatbool = [false, false, false, false];
+  //variables for selected shop
+
+  double _value = 20000.0;
   String _label = '';
-  double lat, lng;
   TextEditingController searchController = TextEditingController();
+  ////////////////////////////////search variables
+
+  bool loading = true;
+  bool searchflag = false;
 
   Position _currentPosition;
 
+  getShops() async {
+    QuerySnapshot snap = await shopsRef.get();
+    List<DocumentSnapshot> doc = snap.docs;
+    shops = doc;
+    filteredshops = doc;
+    setState(() {
+      loading = false;
+    });
+  }
+
+/*
+  search(String query) {
+    if (query == "") {
+      filteredshops = shops;
+    } else {
+      List shopSearch = shops.where((shopSnap) {
+        String shopName = shopSnap.id;
+        return shopName.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+
+      setState(() {
+        filteredshops = shopSearch;
+      });
+    }
+  }
+*/
+  removeFromList(index) {
+    filteredshops.removeAt(index);
+  }
+
   @override
   void initState() {
+    getShops();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       OverlayImage.fromAssetImage(
-        assetName: 'icon/marker.png',
+        assetName: 'ss/map-marker-icon.png',
         context: context,
       ).then((image) {
-        setState(() {
-          Marker(
-              markerId: 'id',
-              position: LatLng(37.563600, 126.962370),
-              captionText: "커스텀 아이콘",
-              captionColor: Colors.indigo,
-              captionTextSize: 20.0,
-              alpha: 0.8,
-              icon: image,
-              anchor: AnchorPoint(0.5, 1),
-              minZoom: 10,
-              captionMinZoom: 10,
-              width: 45,
-              height: 45,
-              infoWindow: '인포 윈도우',
-              onMarkerTab: _onMarkerTap);
-        });
+        Marker(
+            markerId: 'id',
+            position: LatLng(37.563600, 126.962370),
+            captionText: "커스텀 아이콘",
+            captionColor: Colors.indigo,
+            captionTextSize: 20.0,
+            alpha: 0.8,
+            icon: image,
+            anchor: AnchorPoint(0.5, 1),
+            captionMinZoom: 10,
+            width: 35,
+            height: 35,
+            //infoWindow: '인포 윈도우',
+            onMarkerTab: _onMarkerTap);
+        setState(() {});
       });
     });
+    /*
+    _markers.add(Marker(
+        markerId: 'id',
+        position: LatLng(37.563600, 126.962370),
+        captionText: "커스텀 아이콘",
+        captionColor: Colors.indigo,
+        captionTextSize: 20.0,
+        alpha: 0.8,
+        //icon: image,
+        anchor: AnchorPoint(0.5, 1),
+        captionMinZoom: 10,
+        width: 35,
+        height: 35,
+        //infoWindow: '인포 윈도우',
+        onMarkerTab: _onMarkerTap));
+    setState(() {});
+    */
     /*
     _markers.add(Marker(
         markerId: DateTime.now().toIso8601String(),
@@ -103,14 +163,23 @@ class _BaseMapPageState extends State<BaseMapPage> {
           //        value.docs[i].data()['location'].latitude,
           //        value.docs[i].data()['location'].longitude) <=
           //    _value) {
+          //OverlayImage.fromAssetImage(
+          //  assetName: 'ss/map-marker-icon.png',
+          //  context: context,
+          //).then((image) {
           _markers.add(Marker(
               markerId: _markers.length.toString(),
               position: LatLng(value.docs[i].data()['location'].latitude,
                   value.docs[i].data()['location'].longitude),
-              infoWindow: '인포 윈도우',
+              //infoWindow: '인포 윈도우',
+              //icon: image,
+              width: 25,
+              height: 35,
+              //iconTintColor: Color.fromARGB(255, 255, 0, 0),
               captionText: value.docs[i].id,
               captionMinZoom: 15,
               onMarkerTab: _onMarkerTap));
+          //});
           //}
           setState(() {});
         }
@@ -225,6 +294,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
             markers: _markers,
             nightModeEnable: true,
           ),
+          //if (searched == true) searchFunc(),
           if (detail == true) _detailWidget(),
           Padding(
             padding: EdgeInsets.all(30),
@@ -280,18 +350,24 @@ class _BaseMapPageState extends State<BaseMapPage> {
                 onChanged: (query) {
                   //search(query);
                 },
+                onTap: () {
+                  FocusManager.instance.primaryFocus.unfocus();
+                  showSearch(
+                    context: context,
+                    delegate: CustomSearchDelegate(),
+                  );
+                },
                 decoration: InputDecoration(
                   suffixIcon: GestureDetector(
                     onTap: () {
                       searchController.clear();
                     },
-                    child: Icon(CupertinoIcons.search,
-                        size: 15.0, color: Colors.black),
+                    child: Icon(Feather.x, size: 15.0, color: Colors.black),
                   ),
                   contentPadding: EdgeInsets.only(bottom: 10.0, left: 10.0),
                   border: InputBorder.none,
                   counterText: '',
-                  hintText: 'Search...',
+                  hintText: '검색...',
                   hintStyle: TextStyle(
                     fontSize: 15.0,
                   ),
@@ -304,6 +380,87 @@ class _BaseMapPageState extends State<BaseMapPage> {
     );
   }
 
+  searchFunc() async {}
+
+/*
+  buildUsers() {
+    if (!loading) {
+      if (filteredshops.isEmpty) {
+        return Center(
+          child: Text("No User Found",
+              style: TextStyle(fontWeight: FontWeight.bold)),
+        );
+      } else {
+        return ListView.builder(
+          itemCount: filteredshops.length,
+          itemBuilder: (BuildContext context, int index) {
+            DocumentSnapshot doc = filteredshops[index];
+            //UserModel user = UserModel.fromJson(doc.data());
+            return Column(
+              children: [
+                ListTile(
+                  onTap: () => showProfile(context, profileId: user?.id),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 25.0),
+                  leading: CircleAvatar(
+                    radius: 35.0,
+                    backgroundImage: NetworkImage(user?.photoUrl),
+                  ),
+                  title: Text(user?.username,
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Text(
+                    user?.email,
+                  ),
+                  trailing: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          // builder: (_) => Conversation(
+                          //   userId: doc.id,
+                          //   chatId: 'newChat',
+                          // ),
+                          builder: (_) =>
+                              Profile(profileId: firebaseAuth.currentUser.uid),
+                        ),
+                      );
+                    },
+                    // child: Icon(CupertinoIcons.chat_bubble_fill,
+                    //     color: Theme.of(context).accentColor),
+                    child: Container(
+                      height: 30.0,
+                      width: 60.0,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).accentColor,
+                        borderRadius: BorderRadius.circular(3.0),
+                        // border:
+                        //     Border.all(color: Theme.of(context).accentColor),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text('Message',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(),
+              ],
+            );
+          },
+        );
+      }
+    } else {
+      return Center(
+        child: circularProgress(context),
+      );
+    }
+  }
+*/
   _slidertap() {
     return Align(
       alignment: Alignment.topCenter,
@@ -359,7 +516,9 @@ class _BaseMapPageState extends State<BaseMapPage> {
                   markerId: _markers.length.toString(),
                   position: LatLng(value.docs[i].data()['location'].latitude,
                       value.docs[i].data()['location'].longitude),
-                  infoWindow: '인포 윈도우',
+                  //infoWindow: '인포 윈도우',
+                  width: 25,
+                  height: 35,
                   captionText: value.docs[i].id,
                   captionMinZoom: 15,
                   onMarkerTab: _onMarkerTap));
@@ -389,7 +548,9 @@ class _BaseMapPageState extends State<BaseMapPage> {
                   markerId: _markers.length.toString(),
                   position: LatLng(value.docs[i].data()['location'].latitude,
                       value.docs[i].data()['location'].longitude),
-                  infoWindow: '인포 윈도우',
+                  //infoWindow: '인포 윈도우',
+                  width: 25,
+                  height: 35,
                   captionText: value.docs[i].id,
                   captionMinZoom: 15,
                   onMarkerTab: _onMarkerTap));
@@ -402,12 +563,25 @@ class _BaseMapPageState extends State<BaseMapPage> {
   }
 
   _onMapTap(LatLng position) async {
+    //print('[onTap] lat: ${position.latitude}, lon: ${position.longitude}');
+
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content:
           Text('[onTap] lat: ${position.latitude}, lon: ${position.longitude}'),
       duration: Duration(milliseconds: 500),
       backgroundColor: Colors.black,
     ));
+    /*
+    final controller = await _controller.future;
+    controller.moveCamera(
+      CameraUpdate.toCameraPosition(
+        CameraPosition(
+          target: LatLng(37.569968415084, 126.93120094519),
+          zoom: 15,
+        ),
+      ),
+    );
+    */
     setState(() {
       detail = false;
     });
@@ -673,7 +847,9 @@ class _BaseMapPageState extends State<BaseMapPage> {
                     markerId: _markers.length.toString(),
                     position: LatLng(value.docs[i].data()['location'].latitude,
                         value.docs[i].data()['location'].longitude),
-                    infoWindow: '인포 윈도우',
+                    //infoWindow: '인포 윈도우',
+                    width: 25,
+                    height: 35,
                     captionText: value.docs[i].id,
                     captionMinZoom: 15,
                     onMarkerTab: _onMarkerTap));
@@ -703,7 +879,9 @@ class _BaseMapPageState extends State<BaseMapPage> {
                     markerId: _markers.length.toString(),
                     position: LatLng(value.docs[i].data()['location'].latitude,
                         value.docs[i].data()['location'].longitude),
-                    infoWindow: '인포 윈도우',
+                    //infoWindow: '인포 윈도우',
+                    width: 25,
+                    height: 35,
                     captionText: value.docs[i].id,
                     captionMinZoom: 15,
                     onMarkerTab: _onMarkerTap));
@@ -734,7 +912,21 @@ class _BaseMapPageState extends State<BaseMapPage> {
   // }
 
   void _onCameraChange(
-      LatLng latLng, CameraChangeReason reason, bool isAnimated) {
+      LatLng latLng, CameraChangeReason reason, bool isAnimated) async {
+    if (searched == true) {
+      print("here!");
+      final controller = await _controller.future;
+      controller.moveCamera(
+        CameraUpdate.toCameraPosition(
+          CameraPosition(
+            target: LatLng(lat, long),
+            zoom: 15,
+          ),
+        ),
+      );
+      detail = true;
+      searched = false;
+    }
     print('카메라 움직임 >>> 위치 : ${latLng.latitude}, ${latLng.longitude}'
         '\n원인: $reason'
         '\n에니메이션 여부: $isAnimated');
@@ -782,7 +974,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
                 time = doc.data()['time'];
                 tmpcat = List.from(doc.data()['category']);
                 lat = doc.data()['location'].latitude;
-                lng = doc.data()['location'].longitude;
+                long = doc.data()['location'].longitude;
                 //_markers[pos].captionText = '선택됨';
                 for (int i = 0; i < tmpcatbool.length; i++) {
                   tmpcatbool[i] = false;
@@ -888,7 +1080,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
                               //   fontSize: 25,
                               // ),
                               RaisedButton(
-                                onPressed: () => launchInBrowser(LatLng(lat, lng), placename),
+                                onPressed: () => launchInBrowser(LatLng(lat, long), placename),
                                 child: Text('길 찾기'),
                                 )
                             ],
