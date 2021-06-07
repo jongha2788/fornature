@@ -28,10 +28,6 @@ class _ProfileState extends State<Profile> {
   int visitCount = 0;
   bool isFollowing = false;
   bool isVisited = false;
-  //int visithistory = 0;
-  // bool isToggle = true; // list or grid view of posts
-  bool isFollowing = false;
-  bool isvisitHistory = false;
   UserModel users;
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
@@ -45,7 +41,6 @@ class _ProfileState extends State<Profile> {
     super.initState();
     checkIfFollowing();
     checkIfVisited();
-    // checkIfvisithistory();
   }
 
   checkIfFollowing() async {
@@ -73,13 +68,11 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('프로필'),
-        title: Text('내 프로필'),
         actions: [
           widget.profileId == firebaseAuth.currentUser.uid
               ? Center(
                   child: Padding(
                     padding: const EdgeInsets.all(17.0),
-                    padding: const EdgeInsets.only(bottom: 3.0, right: 20.0),
                     child: GestureDetector(
                       onTap: () {
                         firebaseAuth.signOut();
@@ -92,7 +85,6 @@ class _ProfileState extends State<Profile> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold,
                         ),
-                            fontWeight: FontWeight.w600, fontSize: 14.0),
                       ),
                     ),
                   ),
@@ -123,14 +115,13 @@ class _ProfileState extends State<Profile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 28.0),
+                              padding: const EdgeInsets.only(left: 20.0),
                               child: CircleAvatar(
                                 backgroundImage: NetworkImage(user?.photoUrl),
                                 radius: 50.0,
                               ),
                             ),
                             SizedBox(width: 12.0),
-                            SizedBox(width: 20.0),
                             /* username */
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,96 +160,12 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ],
                                     ),
-                                        Container(
-                                          width: 130.0,
-                                          child: Text(
-                                            user?.username,
-                                            style: TextStyle(
-                                                fontSize: 23.0,
-                                                fontWeight: FontWeight.w900),
-                                            maxLines: null,
-                                          ),
-                                        ),
-                                        // Container(
-                                        //   width: 130.0,
-                                        //   child: Text(
-                                        //     user?.country,
-                                        //     style: TextStyle(
-                                        //       fontSize: 12.0,
-                                        //       fontWeight: FontWeight.w600,
-                                        //     ),
-                                        //     maxLines: 1,
-                                        //     overflow: TextOverflow.ellipsis,
-                                        //   ),
-                                        // ),
-                                        /* email account */
-                                        SizedBox(height: 5.0),
-                                        Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              user?.email,
-                                              style: TextStyle(
-                                                // color: Color(0xff4D4D4D),
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    /* settings button */
-                                    // widget.profileId == currentUserId()
-                                    //     ? InkWell(
-                                    //         onTap: () {
-                                    //           Navigator.of(context).push(
-                                    //             CupertinoPageRoute(
-                                    //               builder: (_) => Setting(),
-                                    //             ),
-                                    //           );
-                                    //         },
-                                    //         child: Column(
-                                    //           children: [
-                                    //             Icon(
-                                    //               Icons.settings,
-                                    //               // color: Theme.of(context)
-                                    //               //     .accentColor
-                                    //             ),
-                                    //             Text(
-                                    //               'settings',
-                                    //               style:
-                                    //                   TextStyle(fontSize: 11.5),
-                                    //             )
-                                    //           ],
-                                    //         ),
-                                    //       )
-                                    //     : buildLikeButton()
                                   ],
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        /* bio */
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                        //   child: user.bio.isEmpty
-                        //       ? Container()
-                        //       : Container(
-                        //           width: 200,
-                        //           child: Text(
-                        //             user?.bio,
-                        //             style: TextStyle(
-                        //               //    color: Color(0xff4D4D4D),
-                        //               fontSize: 10.0,
-                        //               fontWeight: FontWeight.w600,
-                        //             ),
-                        //             maxLines: null,
-                        //           ),
-                        //         ),
-                        // ),
 
                         /* POSTS, FOLLOWERS, FOLLOWING */
                         SizedBox(height: 15.0),
@@ -266,7 +173,6 @@ class _ProfileState extends State<Profile> {
                           child: Container(
                             height: 50.0,
                             width: 380.0,
-                            width: 350.0,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -288,29 +194,6 @@ class _ProfileState extends State<Profile> {
                                         return buildCount("게시물", 0);
                                       }
                                     },
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
-                                  child: Container(
-                                    width: 50.0,
-                                    child: StreamBuilder(
-                                      stream: postRef
-                                          .where('ownerId',
-                                              isEqualTo: widget.profileId)
-                                          .snapshots(),
-                                      builder: (context,
-                                          AsyncSnapshot<QuerySnapshot>
-                                              snapshot) {
-                                        if (snapshot.hasData) {
-                                          QuerySnapshot snap = snapshot.data;
-                                          List<DocumentSnapshot> docs =
-                                              snap.docs;
-                                          return buildCount(
-                                              "포스트", docs?.length ?? 0);
-                                        } else {
-                                          return buildCount("포스트", 0);
-                                        }
-                                      },
-                                    ),
                                   ),
                                 ),
                                 /* line between posts and followers */
@@ -394,7 +277,6 @@ class _ProfileState extends State<Profile> {
                                         //print(docs[0].get('Count'));
                                         return buildCount(
                                             "방문기록", docs[0]?.get('Count') ?? 0);
-                                            "방문기록",docs[0]?.get('Count') ?? 0);
                                       } else {
                                         return buildCount("방문기록", 0);
                                       }
@@ -405,7 +287,6 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                        //),
                         buildProfileButton(user),
                       ],
                     );
@@ -432,16 +313,6 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                     ),
-                            '모든 포스트',
-                            style: TextStyle(fontWeight: FontWeight.w900),
-                          ),
-                          /* view mode icon */
-                          // Spacer(),
-                          // buildIcons(),
-                        ],
-                      ),
-                    ),
-                    // buildPostView()
                     buildGridPost()
                   ],
                 );
@@ -453,30 +324,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-/*
-//show the toggling icons "grid" or "list" view.
-  buildIcons() {
-    if (isToggle) {
-      return IconButton(
-          icon: Icon(Icons.list),
-          onPressed: () {
-            setState(() {
-              isToggle = false;
-            });
-          });
-    } else if (isToggle == false) {
-      return IconButton(
-        icon: Icon(Icons.grid_view),
-        onPressed: () {
-          setState(() {
-            isToggle = true;
-          });
-        },
-      );
-    }
-  }
-*/
-
   buildCount(String label, int count) {
     return Column(
       children: <Widget>[
@@ -484,18 +331,18 @@ class _ProfileState extends State<Profile> {
         Text(
           count.toString(),
           style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'NanumSquare_acEB'),
+            fontSize: 20.0,
+            fontWeight: FontWeight.w900,
+          ),
         ),
         SizedBox(height: 4.0),
         /* category text style */
         Text(
           label,
           style: TextStyle(
-              fontSize: 12.0,
-              fontWeight: FontWeight.w400,
-              fontFamily: 'NanumSquare_acEB'),
+            fontSize: 12.0,
+            fontWeight: FontWeight.w400,
+          ),
         )
       ],
     );
@@ -507,7 +354,6 @@ class _ProfileState extends State<Profile> {
     if (isMe) {
       return buildButton(
           text: "프로필 편집",
-          text: "프로필 수정",
           function: () {
             Navigator.of(context).push(
               CupertinoPageRoute(
@@ -543,15 +389,6 @@ class _ProfileState extends State<Profile> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(3.0),
             border: Border.all(width: 0.3, color: Colors.black),
-            // gradient: LinearGradient(
-            //   begin: Alignment.topRight,
-            //   end: Alignment.bottomLeft,
-            //   colors: [
-            //     Theme.of(context).accentColor,
-            //     Color(0x000000),
-            //     // Color(0xff597FDB),
-            //   ],
-            // ),
           ),
           child: Center(
             child: Text(
@@ -639,37 +476,6 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-/*
-  buildPostView() {
-    if (isToggle == true) {
-      return buildGridPost();
-    } else if (isToggle == false) {
-      return buildPosts();
-    }
-  }
-
-  buildPosts() {
-    return StreamBuilderWrapper(
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      stream: postRef
-          .where('ownerId', isEqualTo: widget.profileId)
-          .orderBy('timestamp', descending: true)
-          .snapshots(),
-      physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (_, DocumentSnapshot snapshot) {
-        PostModel posts = PostModel.fromJson(snapshot.data());
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 15.0),
-          child: Posts(
-            post: posts,
-          ),
-        );
-      },
-    );
-  }
-*/
-
   buildGridPost() {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
@@ -685,51 +491,6 @@ class _ProfileState extends State<Profile> {
           PostModel posts = PostModel.fromJson(snapshot.data());
           return PostTile(
             post: posts,
-          );
-        },
-      ),
-    );
-  }
-
-  buildLikeButton() {
-    return StreamBuilder(
-      stream: favUsersRef
-          .where('postId', isEqualTo: widget.profileId)
-          .where('userId', isEqualTo: currentUserId())
-          .snapshots(),
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasData) {
-          List<QueryDocumentSnapshot> docs = snapshot?.data?.docs ?? [];
-          return GestureDetector(
-            onTap: () {
-              if (docs.isEmpty) {
-                favUsersRef.add({
-                  'userId': currentUserId(),
-                  'postId': widget.profileId,
-                  'dateCreated': Timestamp.now(),
-                });
-              } else {
-                favUsersRef.doc(docs[0].id).delete();
-              }
-            },
-            child: Container(
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 3.0,
-                  blurRadius: 5.0,
-                )
-              ], color: Colors.white, shape: BoxShape.circle),
-              child: Padding(
-                padding: EdgeInsets.all(3.0),
-                child: Icon(
-                  docs.isEmpty
-                      ? CupertinoIcons.heart
-                      : CupertinoIcons.heart_fill,
-                  color: Colors.red,
-                ),
-              ),
-            ),
           );
         },
       ),
