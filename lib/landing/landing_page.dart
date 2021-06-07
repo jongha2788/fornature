@@ -34,7 +34,6 @@ class _LandingState extends State<Landing> {
                 fontSize: 26.0,
                 fontWeight: FontWeight.w900,
                 fontFamily: 'SangSangFlowerRoad',
-                fontFamily: 'Lato-Regular',
               ),
             )
           ],
@@ -66,7 +65,6 @@ class _LandingState extends State<Landing> {
                         fontSize: 20.0,
                         fontWeight: FontWeight.w900,
                         color: Colors.black,
-                        fontFamily: 'NanumSquare_acEB',
                       ),
                     ),
                   ),
@@ -88,7 +86,6 @@ class _LandingState extends State<Landing> {
                         fontSize: 20.0,
                         fontWeight: FontWeight.w900,
                         color: Colors.black,
-                        fontFamily: 'NanumSquare_acEB',
                       ),
                     ),
                   ),
