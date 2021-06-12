@@ -36,6 +36,7 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: Colors.white,
         key: viewModel.scaffoldKey,
         appBar: AppBar(
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text("프로필 편집"),
           actions: [
@@ -47,7 +48,6 @@ class _EditProfileState extends State<EditProfile> {
                   child: Text(
                     '저장',
                     style: TextStyle(
-                      fontWeight: FontWeight.w900,
                       fontSize: 15.0,
                     ),
                   ),

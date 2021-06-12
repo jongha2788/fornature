@@ -29,10 +29,10 @@ class _PostTileState extends State<PostTile> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
-          elevation: 5,
+          // elevation: 5,
           child: ClipRRect(
             borderRadius: BorderRadius.all(
-              Radius.circular(3.0),
+              Radius.circular(2.0),
             ),
             child: cachedNetworkImage(widget.post.mediaUrl),
           ),

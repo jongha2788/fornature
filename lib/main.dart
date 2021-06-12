@@ -42,7 +42,6 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: Constants.appName,
             debugShowCheckedModeBanner: false,
-            // theme: notifier.dark ? Constants.darkTheme : // don't use dark mode
             theme: Constants.lightTheme,
             home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),

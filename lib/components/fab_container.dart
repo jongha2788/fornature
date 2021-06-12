@@ -46,11 +46,10 @@ class FabContainer extends StatelessWidget {
     return showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .65,
+          heightFactor: .55,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

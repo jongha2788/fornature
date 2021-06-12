@@ -32,8 +32,10 @@ class _CreatePostState extends State<CreatePost> {
         progressIndicator: circularProgress(context),
         inAsyncCall: viewModel.loading,
         child: Scaffold(
+          backgroundColor: Colors.white,
           key: viewModel.scaffoldKey,
           appBar: AppBar(
+            backgroundColor: Colors.white,
             leading: IconButton(
               icon: Icon(Feather.x),
               onPressed: () {
@@ -56,7 +58,6 @@ class _CreatePostState extends State<CreatePost> {
                     '저장',
                     style: TextStyle(
                       fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -119,10 +120,6 @@ class _CreatePostState extends State<CreatePost> {
                                   ),
                                   Text(
                                     '사진을 등록하세요',
-                                    style: TextStyle(
-                                      fontSize: 17.0,
-                                      fontWeight: FontWeight.w300,
-                                    ),
                                   ),
                                 ],
                               )
@@ -138,7 +135,7 @@ class _CreatePostState extends State<CreatePost> {
               TextFormField(
                 initialValue: viewModel.description,
                 decoration: InputDecoration(
-                  hintText: '설명 추가..',
+                  hintText: '설명 추가',
                   focusedBorder: UnderlineInputBorder(),
                 ),
                 maxLines: null,
@@ -153,7 +150,7 @@ class _CreatePostState extends State<CreatePost> {
                     controller: viewModel.locationTEC,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(0.0),
-                      hintText: '위치 추가..',
+                      hintText: '위치 추가',
                       focusedBorder: UnderlineInputBorder(),
                     ),
                     maxLines: null,
@@ -182,11 +179,10 @@ class _CreatePostState extends State<CreatePost> {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .5,
+          heightFactor: .45,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
