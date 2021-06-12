@@ -19,7 +19,9 @@ class _ActivitiesState extends State<Activities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Feather.x),
           onPressed: () {
@@ -38,7 +40,6 @@ class _ActivitiesState extends State<Activities> {
                 '지우기',
                 style: TextStyle(
                   fontSize: 13.0,
-                  fontWeight: FontWeight.w900,
                   color: Theme.of(context).accentColor,
                 ),
               ),

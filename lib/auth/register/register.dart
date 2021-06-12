@@ -26,15 +26,17 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.white,
         key: viewModel.scaffoldKey,
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 100.0),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 25,
+              vertical: MediaQuery.of(context).size.height / 5),
           children: [
             Center(
               child: Text(
                 '초행길에 오신 걸 환영합니다!',
                 style: TextStyle(
-                    fontSize: 23.0,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'NanumSquare_acEB'),
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
             SizedBox(height: 5.0),
@@ -43,7 +45,6 @@ class _RegisterState extends State<Register> {
                 '제로 웨이스트 라이프 스타일을 시작해볼까요?',
                 style: TextStyle(
                   fontSize: 15.0,
-                  fontWeight: FontWeight.w300,
                 ),
               ),
             ),

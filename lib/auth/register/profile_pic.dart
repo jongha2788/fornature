@@ -24,19 +24,21 @@ class _ProfilePictureState extends State<ProfilePicture> {
         progressIndicator: circularProgress(context),
         inAsyncCall: viewModel.loading,
         child: Scaffold(
+          backgroundColor: Colors.white,
           key: viewModel.scaffoldKey,
           appBar: AppBar(
+            backgroundColor: Colors.white,
             title: Text('프로필 등록'),
             centerTitle: true,
           ),
           body: ListView(
-            padding: EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 50.0, vertical: 50.0),
             children: [
               InkWell(
                 onTap: () => showImageChoices(context, viewModel),
                 child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width - 50,
+                  height: MediaQuery.of(context).size.width - 110,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.all(
@@ -56,14 +58,10 @@ class _ProfilePictureState extends State<ProfilePicture> {
                               children: [
                                 Icon(
                                   Icons.camera_alt,
-                                  size: 60.0,
+                                  size: 50.0,
                                 ),
                                 Text(
                                   '프로필 사진을 등록하세요',
-                                  style: TextStyle(
-                                    fontSize: 17.0,
-                                    fontWeight: FontWeight.w300,
-                                  ),
                                 ),
                               ],
                             )
@@ -87,7 +85,6 @@ class _ProfilePictureState extends State<ProfilePicture> {
                       '저장',
                       style: TextStyle(
                         fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -105,11 +102,10 @@ class _ProfilePictureState extends State<ProfilePicture> {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .5,
+          heightFactor: .45,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -32,12 +32,13 @@ class _ViewImageState extends State<ViewImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: buildImage(context),
       ),
       bottomNavigationBar: BottomAppBar(
           elevation: 0.0,
-          color: Colors.transparent,
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(

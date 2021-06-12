@@ -14,8 +14,9 @@ class Constants {
   static Color lightAccent = Colors.black;
   static Color darkAccent = Color(0xff886EE4);
 
-//  static Color lightBG = Color(0xfff3f4f9);
-  static Color lightBG = Color(0xfff8fff7);
+  //  static Color lightBG = Color(0xfff3f4f9);
+  // static Color lightBG = Color(0xfff8fff7);
+  static Color lightBG = Color(0xffffffff);
   static Color darkBG = Color(0xff2B2B2B);
 
   static ThemeData lightTheme = ThemeData(
@@ -35,13 +36,13 @@ class Constants {
         headline6: TextStyle(
           color: Colors.black,
           fontSize: 18,
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.w700,
           fontFamily: 'Roboto-Regular',
         ),
       ),
     ),
   );
-
+/*
   static ThemeData darkTheme = ThemeData(
     fontFamily: 'Roboto-Regular',
     brightness: Brightness.dark,
@@ -66,7 +67,7 @@ class Constants {
       ),
     ),
   );
-
+*/
   static List<T> map<T>(List list, Function handler) {
     List<T> result = [];
     for (var i = 0; i < list.length; i++) {

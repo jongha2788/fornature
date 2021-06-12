@@ -31,7 +31,9 @@ class _CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
@@ -54,7 +56,7 @@ class _CommentsState extends State<Comments> {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: buildFullPost(),
                   ),
-                  Divider(thickness: 1.5),
+                  Divider(thickness: 0.5),
                   buildComments(),
                 ],
               ),
@@ -63,7 +65,7 @@ class _CommentsState extends State<Comments> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.white,
                 ),
                 constraints: BoxConstraints(
                   maxHeight: 190.0,
@@ -73,13 +75,13 @@ class _CommentsState extends State<Comments> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(
-                          top: 4.0, bottom: 4.0, left: 10.0),
+                      padding: const EdgeInsets.only(bottom: 5.0, left: 10.0),
                       child: Container(
                         height: 35.0,
-                        width: MediaQuery.of(context).size.width - 50,
+                        width: MediaQuery.of(context).size.width - 60,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -95,19 +97,13 @@ class _CommentsState extends State<Comments> {
                                 fontSize: 15.0,
                               ),
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(left: 15.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  borderSide: BorderSide(
-                                    width: 0.5,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  borderSide: BorderSide(
-                                    width: 0.5,
-                                  ),
-                                ),
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                contentPadding:
+                                    EdgeInsets.only(left: 5.0, bottom: 13.5),
                                 hintText: "댓글 달기...",
                                 hintStyle: TextStyle(
                                   fontSize: 15.0,
@@ -125,6 +121,7 @@ class _CommentsState extends State<Comments> {
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
                           CupertinoIcons.check_mark,
+                          size: 20.0,
                         ),
                       ),
                     ),
@@ -146,7 +143,7 @@ class _CommentsState extends State<Comments> {
       children: [
         // photo
         Container(
-          height: 400.0,
+          height: MediaQuery.of(context).size.width - 150.0,
           width: MediaQuery.of(context).size.width - 20.0,
           child: cachedNetworkImage(widget.post.mediaUrl),
         ),
@@ -155,19 +152,26 @@ class _CommentsState extends State<Comments> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildLikeButton(),
-            Text(
-              widget.post.description,
-              style: TextStyle(
-                fontSize: 18.0,
+            Container(
+              width: 35.0,
+              height: 35.0,
+              child: buildLikeButton(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text(
+                widget.post.description,
+                style: TextStyle(
+                  fontSize: 14.0,
+                ),
               ),
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.only(top: 2.0, right: 10.0),
+              padding: const EdgeInsets.only(top: 4.0, right: 10.0),
               child: Text(
-                timeago.format(widget.post.timestamp.toDate(), locale: 'ko'),
-              ),
+                  timeago.format(widget.post.timestamp.toDate(), locale: 'ko'),
+                  style: TextStyle(fontSize: 9.0)),
             ),
           ],
         ),
@@ -214,13 +218,13 @@ class _CommentsState extends State<Comments> {
       itemBuilder: (_, DocumentSnapshot snapshot) {
         CommentModel comments = CommentModel.fromJson(snapshot.data());
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+          padding: const EdgeInsets.only(left: 10.0, right: 20.0, bottom: 20.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 15.0,
+                radius: 14.0,
                 backgroundImage: NetworkImage(comments.userDp),
               ),
               SizedBox(width: 8.0),
@@ -231,12 +235,11 @@ class _CommentsState extends State<Comments> {
               SizedBox(width: 8.0),
               Text(
                 comments.comment,
-                style: TextStyle(fontWeight: FontWeight.w500),
               ),
               Spacer(),
               Text(
                 timeago.format(comments.timestamp.toDate(), locale: 'ko'),
-                style: TextStyle(fontSize: 12.0),
+                style: TextStyle(fontSize: 9.0),
               ),
             ],
           ),
