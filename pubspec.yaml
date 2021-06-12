@@ -76,6 +76,7 @@ flutter:
   assets:
     - assets/images/
     - ss/
+    - assets/images/manual/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -96,6 +97,9 @@ flutter:
     - family: SangSangFlowerRoad
       fonts:
         - asset: assets/fonts/SangSangFlowerRoad.otf
+    - family: StrongArmy
+      fonts:
+        - asset: assets/fonts/StrongArmy.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
