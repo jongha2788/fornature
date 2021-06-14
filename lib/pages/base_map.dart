@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:fornature/pages/manual.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:fornature/themes/light_color.dart';
@@ -271,6 +272,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
       key: scaffoldKey,
       appBar: AppBar(
         title: buildSearch(),
+        backgroundColor: Colors.white,
       ),
       body: Stack(
         children: <Widget>[
@@ -329,50 +331,63 @@ class _BaseMapPageState extends State<BaseMapPage> {
     return Row(
       children: [
         Container(
-          height: 35.0,
-          width: MediaQuery.of(context).size.width - 100,
+          height: 40.0,
+          width: MediaQuery.of(context).size.width - 80,
           decoration: BoxDecoration(
-            color: Colors.black26,
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
-            child: Center(
-              child: TextFormField(
-                controller: searchController,
-                textAlignVertical: TextAlignVertical.center,
-                maxLength: 10,
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(20),
-                ],
-                textCapitalization: TextCapitalization.sentences,
-                onChanged: (query) {
-                  //search(query);
-                },
-                onTap: () {
-                  FocusManager.instance.primaryFocus.unfocus();
-                  showSearch(
-                    context: context,
-                    delegate: CustomSearchDelegate(),
-                  );
-                },
-                decoration: InputDecoration(
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      searchController.clear();
-                    },
-                    child: Icon(Feather.x, size: 15.0, color: Colors.black),
-                  ),
-                  contentPadding: EdgeInsets.only(bottom: 10.0, left: 10.0),
-                  border: InputBorder.none,
-                  counterText: '',
-                  hintText: '검색...',
-                  hintStyle: TextStyle(
-                    fontSize: 15.0,
-                  ),
+              // color: Colors.white,
+              borderRadius: BorderRadius.circular(20.0),
+              border: Border.all(
+                color: Colors.black26,
+              )),
+          child: Center(
+            child: TextFormField(
+              controller: searchController,
+              textAlignVertical: TextAlignVertical.center,
+              maxLength: 10,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+              ],
+              textCapitalization: TextCapitalization.sentences,
+              // onChanged: (query) {
+              //   //search(query);
+              // },
+              onTap: () {
+                FocusManager.instance.primaryFocus.unfocus();
+                showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(),
+                );
+              },
+              decoration: InputDecoration(
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    searchController.clear();
+                  },
+                  child: Icon(Feather.x, size: 15.0, color: Colors.black),
+                ),
+                contentPadding: EdgeInsets.only(bottom: 10.0, left: 15.0),
+                border: InputBorder.none,
+                counterText: '',
+                hintText: '검색',
+                hintStyle: TextStyle(
+                  fontSize: 15.0,
                 ),
               ),
+            ),
+          ),
+        ),
+        // Spacer(),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(CupertinoPageRoute(builder: (_) => Manual()));
+            },
+            child: Icon(
+              CupertinoIcons.lightbulb,
+              size: 22.0,
             ),
           ),
         ),
@@ -382,85 +397,6 @@ class _BaseMapPageState extends State<BaseMapPage> {
 
   searchFunc() async {}
 
-/*
-  buildUsers() {
-    if (!loading) {
-      if (filteredshops.isEmpty) {
-        return Center(
-          child: Text("No User Found",
-              style: TextStyle(fontWeight: FontWeight.bold)),
-        );
-      } else {
-        return ListView.builder(
-          itemCount: filteredshops.length,
-          itemBuilder: (BuildContext context, int index) {
-            DocumentSnapshot doc = filteredshops[index];
-            //UserModel user = UserModel.fromJson(doc.data());
-            return Column(
-              children: [
-                ListTile(
-                  onTap: () => showProfile(context, profileId: user?.id),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 25.0),
-                  leading: CircleAvatar(
-                    radius: 35.0,
-                    backgroundImage: NetworkImage(user?.photoUrl),
-                  ),
-                  title: Text(user?.username,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text(
-                    user?.email,
-                  ),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          // builder: (_) => Conversation(
-                          //   userId: doc.id,
-                          //   chatId: 'newChat',
-                          // ),
-                          builder: (_) =>
-                              Profile(profileId: firebaseAuth.currentUser.uid),
-                        ),
-                      );
-                    },
-                    // child: Icon(CupertinoIcons.chat_bubble_fill,
-                    //     color: Theme.of(context).accentColor),
-                    child: Container(
-                      height: 30.0,
-                      width: 60.0,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        borderRadius: BorderRadius.circular(3.0),
-                        // border:
-                        //     Border.all(color: Theme.of(context).accentColor),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text('Message',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(),
-              ],
-            );
-          },
-        );
-      }
-    } else {
-      return Center(
-        child: circularProgress(context),
-      );
-    }
-  }
-*/
   _slidertap() {
     return Align(
       alignment: Alignment.topCenter,
@@ -1015,11 +951,16 @@ class _BaseMapPageState extends State<BaseMapPage> {
     });
     */
   }
-  
-  launchInBrowser(LatLng position, String placename) async{
-    String url = 'https://map.kakao.com/link/to/' + '$placename' + ',' + '${position.latitude}' + ',' + '${position.longitude}';
 
-    if(await canLaunch(url)) {
+  launchInBrowser(LatLng position, String placename) async {
+    String url = 'https://map.kakao.com/link/to/' +
+        '$placename' +
+        ',' +
+        '${position.latitude}' +
+        ',' +
+        '${position.longitude}';
+
+    if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw '열기 실패';
@@ -1080,9 +1021,10 @@ class _BaseMapPageState extends State<BaseMapPage> {
                               //   fontSize: 25,
                               // ),
                               RaisedButton(
-                                onPressed: () => launchInBrowser(LatLng(lat, long), placename),
+                                onPressed: () => launchInBrowser(
+                                    LatLng(lat, long), placename),
                                 child: Text('길 찾기'),
-                                )
+                              )
                             ],
                           ),
                           Row(
