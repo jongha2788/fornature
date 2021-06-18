@@ -49,7 +49,7 @@ class FabContainer extends StatelessWidget {
           borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .55,
+          heightFactor: .60,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
