@@ -104,6 +104,8 @@ class _QrcodeScannerState extends State<QrcodeScanner> {
                   snackBar = new SnackBar(
                       content: new Text('제로웨이스트 매장을 방문하여, 1회 방문 기록이 추가되었습니다.'));
                   Scaffold.of(context).showSnackBar(snackBar);
+                                    handlevisithistory();
+
                 } else {
                   print("실패");
                   snackBar = new SnackBar(
